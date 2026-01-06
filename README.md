@@ -77,3 +77,9 @@ src/ # Gesamter Applikationscode
 └─ index.html # Einzige HTML-Datei (Root-DOM für SPA)
 
 Every file should be in camelCase
+
+# Roles
+
+Scrum Master: Patricia 
+Product Owner: Mike
+Technical Lead: Thomas

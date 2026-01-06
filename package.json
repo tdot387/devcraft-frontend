@@ -17,6 +17,7 @@
     "vitest": "^4.0.16"
   },
   "dependencies": {
-    "bootstrap": "^5.3.8"
+    "bootstrap": "^5.3.8",
+    "firebase": "^12.7.0"
   }
 }

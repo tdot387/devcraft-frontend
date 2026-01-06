@@ -1,0 +1,19 @@
+{
+  "name": "devcraft-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && npm run test && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "ts-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "jsdom": "^27.4.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vitest": "^4.0.16"
+  }
+}

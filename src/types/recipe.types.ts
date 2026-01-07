@@ -1,6 +1,6 @@
 interface IIngredient {
   name: string;
-  quantity: string;
+  amount: string;
 }
 
 export interface IRecipe {

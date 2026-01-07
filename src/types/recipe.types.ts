@@ -10,4 +10,9 @@ export interface IRecipe {
   instructions: string;
   ingredients: IIngredient[];
   favorite: boolean;
+  imageUrl: string;
+}
+
+export interface IRecipeWithId extends IRecipe {
+  id: string;
 }

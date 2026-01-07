@@ -1,5 +1,6 @@
 // Startseite (Suche + Rezeptliste)
 import { createHeader } from "../components/header";
+import { renderHomeViewTemplate } from "@/templates/home.template";
 
 export function renderHomeView() {
   const app = document.querySelector("#app")!;
@@ -9,7 +10,6 @@ export function renderHomeView() {
   app.appendChild(header);
 
   const content = document.createElement("div");
-  content.innerHTML = "<h1>Home View - TODO</h1>";
-  content.innerHTML += '<a href="/about">Go to About Page</a>';
+  content.innerHTML = renderHomeViewTemplate();
   app.appendChild(content);
 }

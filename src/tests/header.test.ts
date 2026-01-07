@@ -1,18 +1,18 @@
 // Test für den Header
-import { describe, it, expect } from "vitest";
-import { createHeader } from "@/components/header";
+import { describe, it, expect } from 'vitest';
+import { createHeader } from '@/components/header';
 
-describe("Header Component", () => {
-  it("should create a header element", () => {
+describe('Header Component', () => {
+  it('should create a header element', () => {
     const header = createHeader();
     expect(header).toBeInstanceOf(HTMLElement);
-    expect(header.tagName).toBe("HEADER");
+    expect(header.tagName).toBe('HEADER');
   });
 
-  it("should contain a title", () => {
+  it('should contain a title', () => {
     const header = createHeader();
-    const title = header.querySelector("h1");
+    const title = header.querySelector('h1');
     expect(title).not.toBeNull();
-    expect(title?.textContent).toBe("Meine App");
+    expect(title?.textContent).toBe('Meine App');
   });
 });

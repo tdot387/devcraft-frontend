@@ -84,4 +84,4 @@ Scrum Master: Patricia
 Product Owner: Mike
 Technical Lead: Thomas
 
-lock doesnt work
+does it work now

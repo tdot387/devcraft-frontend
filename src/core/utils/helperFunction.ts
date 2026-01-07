@@ -1,4 +1,4 @@
-import type { RouteHandler } from "@/types/router";
+import type { RouteHandler } from "@/types/router.types";
 import { router } from "../router";
 
 // helper function to set up event listeners for link clicks

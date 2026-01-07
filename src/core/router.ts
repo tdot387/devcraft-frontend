@@ -1,4 +1,4 @@
-import type { RouteHandler, TRouter } from "@/types/router";
+import type { RouteHandler, TRouter } from "@/types/router.types";
 import { matchDynamicRoute, setupEventListeners } from "./utils/helperFunction";
 import { renderHomeView } from "../views/homeView";
 

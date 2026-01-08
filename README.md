@@ -80,6 +80,6 @@ Every file should be in camelCase
 
 # Roles
 
-Scrum Master: Patricia 
+Scrum Master: Patricia
 Product Owner: Mike
 Technical Lead: Thomas

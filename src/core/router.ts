@@ -1,6 +1,7 @@
 import type { RouteHandler, TRouter } from '@/types/router.types';
 import { matchDynamicRoute, setupEventListeners } from './utils/helperFunction';
 import { renderHomeView } from '../views/homeView';
+import { renderLayout } from '../layouts/layoutManager';
 import { renderAddNewRecipeView } from '@/views/addNewRecipeView';
 
 const routes: Record<string, RouteHandler> = {
@@ -38,6 +39,8 @@ const router: TRouter = {
     if (addHistory) {
       window.history.pushState({ route }, '', route);
     }
+
+    renderLayout(route);
 
     if (routes[route]) {
       routes[route]();

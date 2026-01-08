@@ -1,26 +1,27 @@
 import { renderDefaultLayout } from './default.layouts';
 type LayoutRenderer = () => void;
 
+/**
+ * Layout System - How to use and extend
+ *
+ * HOW TO ADD A NEW LAYOUT:
+ * 1. Create layout function in layouts/ folder
+ * 2. Add it to 'layouts' object
+ * 3. Assign routes in 'routeLayouts'
+ *
+ * Example:
+ * layouts: { minimal: renderMinimalLayout }
+ * routeLayouts: { '/login': 'minimal' }
+ */
+
 const layouts: Record<string, LayoutRenderer> = {
   default: renderDefaultLayout,
-  auth: () => {
-    console.log('Render auth layout');
-    const header = document.querySelector('#header')!;
-    const footer = document.querySelector('#footer')!;
-    const app = document.querySelector('#app')!;
-    
-    // Set auth layout classes
-    app.className = 'flex-grow-1 d-flex justify-content-center align-items-center';
-    
-    header.innerHTML = '<div class="bg-warning p-3 text-center">🔐 AUTH HEADER</div>';
-    footer.innerHTML = '<div class="bg-info p-2 text-center mt-auto">Auth Footer</div>';
-  },
+  // auth: renderAuthLayout, // Example for additional layout
 };
 
 const routeLayouts: Record<string, string> = {
   '/': 'default',
-  '/about': 'auth',
-  '/recipe': 'default',
+  // '/about': 'auth', // Example route to layout mapping
 };
 
 export function renderLayout(route: string) {

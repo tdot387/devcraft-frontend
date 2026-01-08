@@ -7,7 +7,7 @@ const routes: Record<string, RouteHandler> = {
   '/': renderHomeView,
   '/about': () => console.log('About page'),
   '/recipe': () => console.log('Recipe list'),
-  '/add-new-recipe': renderAddNewRecipeView
+  '/add-new-recipe': renderAddNewRecipeView,
 };
 
 /**

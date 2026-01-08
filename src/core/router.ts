@@ -1,13 +1,13 @@
-import type { RouteHandler, TRouter } from "@/types/router.types";
-import { matchDynamicRoute, setupEventListeners } from "./utils/helperFunction";
-import { renderHomeView } from "../views/homeView";
-import { renderAddNewRecipeView } from "@/views/addNewRecipeView";
+import type { RouteHandler, TRouter } from '@/types/router.types';
+import { matchDynamicRoute, setupEventListeners } from './utils/helperFunction';
+import { renderHomeView } from '../views/homeView';
+import { renderAddNewRecipeView } from '@/views/addNewRecipeView';
 
 const routes: Record<string, RouteHandler> = {
-  "/": renderHomeView,
-  "/about": () => console.log("About page"),
-  "/recipe": () => console.log("Recipe list"),
-  "/add-new-recipe": renderAddNewRecipeView
+  '/': renderHomeView,
+  '/about': () => console.log('About page'),
+  '/recipe': () => console.log('Recipe list'),
+  '/add-new-recipe': renderAddNewRecipeView
 };
 
 /**
@@ -36,7 +36,7 @@ const router: TRouter = {
 
   nav: (route: string, addHistory = true) => {
     if (addHistory) {
-      window.history.pushState({ route }, "", route);
+      window.history.pushState({ route }, '', route);
     }
 
     if (routes[route]) {
@@ -51,8 +51,8 @@ const router: TRouter = {
       return;
     }
 
-    const app = document.querySelector("#app")!;
-    app.innerHTML = "<h1>404 - Page not found</h1>";
+    const app = document.querySelector('#app')!;
+    app.innerHTML = '<h1>404 - Page not found</h1>';
   },
 };
 

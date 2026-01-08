@@ -1,6 +1,6 @@
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase/firebaseApp';
-import type { IRecipeWithId } from '@/types/recipe.types';
+import type { IRecipe, IRecipeWithId } from '@/types/recipe.types';
 
 export async function getRecipes(): Promise<IRecipeWithId[]> {
   const snapshot = await getDocs(collection(db, 'recipes'));
@@ -10,11 +10,11 @@ export async function getRecipes(): Promise<IRecipeWithId[]> {
   }));
 }
 
-export async function createRecipe() {
+export async function createRecipe(recipe: IRecipe) {
 
   try {
     const docRef = await addDoc(collection(db, 'recipes'), {
-      name: 'Test'
+      recipe
     });
     console.log('Success!', docRef.id);
 

@@ -1,11 +1,13 @@
 import type { RouteHandler, TRouter } from "@/types/router.types";
 import { matchDynamicRoute, setupEventListeners } from "./utils/helperFunction";
 import { renderHomeView } from "../views/homeView";
+import { renderAddNewRecipeView } from "@/views/addNewRecipeView";
 
 const routes: Record<string, RouteHandler> = {
   "/": renderHomeView,
   "/about": () => console.log("About page"),
   "/recipe": () => console.log("Recipe list"),
+  "/add-new-recipe": renderAddNewRecipeView
 };
 
 /**

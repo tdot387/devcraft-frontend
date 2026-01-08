@@ -1,10 +1,7 @@
-// Kopfbereich (z. B. Suche, Navigation)
-// TODO: Header implementieren
+import { renderHeaderTemplate } from '../templates/header.template';
 
-export function createHeader(): HTMLElement {
-  const header = document.createElement('header');
-  const title = document.createElement('h1');
-  title.textContent = 'Meine App';
-  header.appendChild(title);
-  return header;
+export function renderHeader(): string {
+  const template = renderHeaderTemplate();
+  // javascript logic here if needed
+  return template;
 }

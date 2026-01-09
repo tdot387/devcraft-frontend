@@ -2,13 +2,18 @@ import type { IRecipe } from '@/types/recipe.types';
 
 export function renderRecipeCard(recipe: IRecipe): string {
   const ingredientsList = recipe.ingredients
-    .map(ingredient => `<li class="list-group-item">${ingredient.quantity} ${ingredient.name}</li>`)
+    .map(
+      (ingredient) =>
+        `<li class="list-group-item">${ingredient.quantity} ${ingredient.name}</li>`,
+    )
     .join('');
 
   const categories = recipe.categories
-    .map(category => `<span class="badge bg-secondary me-1">${category}</span>`)
+    .map(
+      (category) => `<span class="badge bg-secondary me-1">${category}</span>`,
+    )
     .join('');
-
+  // toggleFavourite is an another ticket - just a placeholder for now
   return `
     <div class="col-md-6 col-lg-4 mb-4">
       <div class="card h-100">

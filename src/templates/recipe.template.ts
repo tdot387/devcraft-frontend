@@ -2,20 +2,26 @@ import type { IRecipe } from '@/types/recipe.types';
 
 export function renderRecipeViewTemplate(recipe: IRecipe) {
   const ingredientsList = recipe.ingredients
-    .map(ingredient => `<li class="list-group-item">${ingredient.quantity} ${ingredient.name}</li>`)
+    .map(
+      (ingredient) =>
+        `<li class="list-group-item">${ingredient.quantity} ${ingredient.name}</li>`,
+    )
     .join('');
 
   const categories = recipe.categories
-    .map(category => `<span class="badge bg-secondary me-1">${category}</span>`)
+    .map(
+      (category) => `<span class="badge bg-secondary me-1">${category}</span>`,
+    )
     .join('');
 
+  // toggleFavourite is an another ticket - just a placeholder for now
   return `
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-start mb-3">
           <h1>${recipe.name}</h1>
           <button class="btn ${recipe.favorite ? 'btn-danger' : 'btn-outline-danger'}" 
-                  onclick="toggleFavorite('${recipe.name}')">
+                  onclick="toggleFavorite('${recipe.name}')"> 
             <i class="bi bi-heart${recipe.favorite ? '-fill' : ''}"></i> 
             ${recipe.favorite ? 'Favorit entfernen' : 'Zu Favoriten'}
           </button>

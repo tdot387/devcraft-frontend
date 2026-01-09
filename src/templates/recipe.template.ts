@@ -1,29 +1,34 @@
 import type { IRecipe } from '@/types/recipe.types';
 
-export function renderRecipeViewTemplate(recipe: IRecipe) {
-  const ingredientsList = recipe.ingredients
+export function renderRecipeViewTemplate(recipe: any) {
+  const recipeData = recipe;
+
+  const ingredientsList = recipeData.ingredients
     .map(
-      (ingredient) =>
-        `<li class="list-group-item">${ingredient.amount} ${ingredient.name}</li>`,
+      (ingredient: any) =>
+        `<li class="list-group-item">${ingredient.amount} ${ingredient.unit || ''} ${ingredient.name}</li>`,
     )
     .join('');
 
-  const categories = recipe.categories
-    .map(
-      (category) => `<span class="badge bg-secondary me-1">${category}</span>`,
-    )
-    .join('');
+  const categories =
+    recipeData.category ||
+    []
+      .map(
+        (category: string) =>
+          `<span class="badge bg-secondary me-1">${category}</span>`,
+      )
+      .join('');
 
   // toggleFavourite is an another ticket - just a placeholder for now
   return `
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-start mb-3">
-          <h1>${recipe.name}</h1>
-          <button class="btn ${recipe.favorite ? 'btn-danger' : 'btn-outline-danger'}" 
-                  onclick="toggleFavorite('${recipe.name}')"> 
-            <i class="bi bi-heart${recipe.favorite ? '-fill' : ''}"></i> 
-            ${recipe.favorite ? 'Favorit entfernen' : 'Zu Favoriten'}
+          <h1>${recipeData.name}</h1>
+          <button class="btn ${recipeData.favorite ? 'btn-danger' : 'btn-outline-danger'}" 
+                  onclick="toggleFavorite('${recipeData.name}')"> 
+            <i class="bi bi-heart${recipeData.favorite ? '-fill' : ''}"></i> 
+            ${recipeData.favorite ? 'Favorit entfernen' : 'Zu Favoriten'}
           </button>
         </div>
         
@@ -47,7 +52,7 @@ export function renderRecipeViewTemplate(recipe: IRecipe) {
                 <h5>Beschreibung</h5>
               </div>
               <div class="card-body">
-                <p>${recipe.description}</p>
+                <p>${recipeData.description}</p>
               </div>
             </div>
             
@@ -56,7 +61,7 @@ export function renderRecipeViewTemplate(recipe: IRecipe) {
                 <h5>Anleitung</h5>
               </div>
               <div class="card-body">
-                <p>${recipe.instructions}</p>
+                <p>${recipeData.instructions}</p>
               </div>
             </div>
           </div>

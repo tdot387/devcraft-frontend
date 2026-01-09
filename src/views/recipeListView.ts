@@ -1,6 +1,6 @@
 import { renderRecipeListTemplate } from '@/templates/recipeList.template';
 import { renderRecipeCard } from '@/components/recipeCard';
-import { apiService } from '@/services/api';
+import { getRecipes } from '@/services/recipe.service';
 
 export async function renderRecipeListView() {
   const app = document.querySelector('#app')!;
@@ -10,7 +10,8 @@ export async function renderRecipeListView() {
   recipeListContainer.innerHTML =
     '<div class="text-center">Lade Rezepte...</div>';
 
-  const recipes = await apiService.getRecipes(); // Fetch all recipes from firebase soon currently using mock data
+  const recipes = await getRecipes();
+
   if (recipes?.length === 0) {
     recipeListContainer.innerHTML =
       '<div class="text-center">Keine Rezepte gefunden.</div>';
@@ -18,6 +19,11 @@ export async function renderRecipeListView() {
   }
 
   const recipeCards =
-    recipes?.map((recipe) => renderRecipeCard(recipe)).join('') || '';
+    recipes
+      ?.map((recipe) => {
+        return renderRecipeCard(recipe);
+      })
+      .join('') || '';
+
   recipeListContainer.innerHTML = recipeCards;
 }

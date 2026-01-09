@@ -4,10 +4,12 @@ interface IIngredient {
 }
 
 export interface IRecipe {
+  id?: string;
   name: string;
-  category: string[];
+  categories: string[];
   description: string;
   instructions: string;
   ingredients: IIngredient[];
   favorite: boolean;
+  image?: string;
 }

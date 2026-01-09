@@ -1,12 +1,22 @@
 import type { RouteHandler, TRouter } from '@/types/router.types';
-import { matchDynamicRoute, setupEventListeners } from './utils/helperFunction';
+import { setupEventListeners } from './utils/helperFunction';
 import { renderHomeView } from '../views/homeView';
+import { renderRecipeListView } from '../views/recipeListView';
+import { renderRecipeView } from '../views/recipeView';
 import { renderLayout } from '../layouts/layoutManager';
+import { getQueryParam } from './utils/urlUtils';
 
 const routes: Record<string, RouteHandler> = {
   '/': renderHomeView,
   '/about': () => console.log('About page'),
-  '/recipe': () => console.log('Recipe list'),
+  '/recipe': () => {
+    const recipeId = getQueryParam('id');
+    if (recipeId) {
+      renderRecipeView();
+    } else {
+      renderRecipeListView();
+    }
+  },
 };
 
 /**
@@ -40,15 +50,11 @@ const router: TRouter = {
 
     renderLayout(route);
 
-    if (routes[route]) {
-      routes[route]();
-      return;
-    }
-
-    // for recipe/:id dynamic route
-    const dynamicMatch = matchDynamicRoute(route);
-    if (dynamicMatch) {
-      dynamicMatch.handler(dynamicMatch.params);
+    // Extract base route without query parameters
+    const baseRoute = route.split('?')[0];
+    
+    if (routes[baseRoute]) {
+      routes[baseRoute]();
       return;
     }
 

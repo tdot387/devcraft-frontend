@@ -1,0 +1,38 @@
+.recipe-hero-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.recipe-hero-image img {
+  transition: transform 0.3s ease;
+}
+
+.recipe-hero-image:hover img {
+  transform: scale(1.05);
+}
+
+.overlay-text {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.recipe-hero-image:hover .overlay-text {
+  opacity: 1;
+}
+
+.feature-card {
+  transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+.recipe-hero-image img {
+  max-height: 300px;
+  width: 100%;
+  object-fit: cover;
+}

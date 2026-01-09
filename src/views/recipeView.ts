@@ -1,9 +1,23 @@
-// Detailseite eines Rezepts (/recipe/:id)
-// TODO: Recipe View implementieren
+import { renderRecipeViewTemplate } from '@/templates/recipe.template';
+import { apiService } from '@/services/api';
+import { getQueryParam } from '@/core/utils/urlUtils';
 
-// import { toBeWritten } from "@/templates/recipe.template";
-
-export function renderRecipeView(recipeId: string) {
-  // TODO: Recipe View implementieren
-  console.log('Recipe View for ID:', recipeId);
+export async function renderRecipeView() {
+  const app = document.querySelector('#app')!;
+  const recipeId = getQueryParam('id');
+  
+  if (!recipeId) {
+    app.innerHTML = '<div class="alert alert-danger">Rezept-ID nicht gefunden</div>';
+    return;
+  }
+  
+  app.innerHTML = '<div class="text-center">Lade Rezept...</div>';
+  
+  const recipe = await apiService.getRecipe(recipeId);
+  if (!recipe) {
+    app.innerHTML = '<div class="alert alert-danger">Rezept nicht gefunden</div>';
+    return;
+  }
+  
+  app.innerHTML = renderRecipeViewTemplate(recipe);
 }

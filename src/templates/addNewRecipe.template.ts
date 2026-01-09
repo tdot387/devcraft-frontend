@@ -18,7 +18,10 @@ export function renderAddNewRecipeTemplate() {
         <div class="row g-3 mt-3">
           <div class="form-group col-6">
             <label for="new-recipe-category">Kategorie des Rezepts</label>
-            <input type="text" class="form-control mt-2" id="new-recipe-category">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control mt-2" id="new-recipe-category">
+              <button class="btn btn-success mt-2" type="button" id="add-new-recipe-btn">+</button>
+            </div>
             <p id="newly-added-categories" class="mt-2"></p>
           </div>
           <div class="form-group col-6">
@@ -26,32 +29,36 @@ export function renderAddNewRecipeTemplate() {
             <input type="text" class="form-control mt-2" id="new-recipe-image-url">
           </div>
         </div>
-        <h2>Zutaten</h2>
-        <div class="row g-3 mt-3">
-          <div class="form-group col-1">
+        <h2 class="mt-3">Zutaten</h2>
+        <div class="row g-3">
+          <div class="form-group col-2">
             <label for="new-recipe-ingr-amount">Menge</label>
-            <select class="form-select mt-2" id="inputGroupSelect01">
-              <option selechted value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="3">4</option>
-              <option value="3">5</option>
-              <option value="3">6</option>
-              <option value="3">7</option>
-              <option value="3">8</option>
-            </select>
+            <input type="text" class="form-control mt-2" id="new-recipe-ingr-amount">
           </div>
-          <div class="form-group col-3">
+          <div class="form-group col-2">
             <label for="new-recipe-ingr-unit">Einheit</label>
-            <input type="text" class="form-control mt-2" id="new-recipe-ingr-unit">
+            <select class="form-select mt-2" id="new-recipe-ingr-unit">
+              <option selected value="g">Gramm</option>
+              <option value="ml">Milliliter</option>
+              <option value="Stk.">Stück</option>
+              <option value="EL">Esslöffel</option>
+              <option value="TL">Teelöffel</option>
+            </select>
           </div>
           <div class="form-group col-8">
             <label for="new-recipe-ingr-name">Name der Zutat</label>
-            <input type="text" class="form-control mt-2" id="new-recipe-ingr-name">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control mt-2" id="new-recipe-ingr-name">
+              <button class="btn btn-success mt-2" type="button" id="add-ingr-btn">+</button>
+            </div>
           </div>
-          <p id="newly-added-categories" class="mt-2"></p>
+          <p id="newly-added-ingredients" class="mt-2"></p>
         </div> 
-        <button class="btn btn-success mt-2" type="submit">Rezept speichern</button>
+        <h2>Zubereitung</h2>
+        <div class=" form-group col-12">
+          <textarea class="form-control" rows="6" style="resize: none;" id="new-recipe-instructions"></textarea>
+        </div>
+        <button class="btn btn-success mt-2 mb-5" type="submit">Rezept speichern</button>
       </form>
 
     </div>

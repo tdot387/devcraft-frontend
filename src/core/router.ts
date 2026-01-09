@@ -5,6 +5,7 @@ import { renderRecipeListView } from '../views/recipeListView';
 import { renderRecipeView } from '../views/recipeView';
 import { renderLayout } from '../layouts/layoutManager';
 import { getQueryParam } from './utils/urlUtils';
+import { renderAddNewRecipeView } from '@/views/addNewRecipeView';
 
 const routes: Record<string, RouteHandler> = {
   '/': renderHomeView,
@@ -17,6 +18,7 @@ const routes: Record<string, RouteHandler> = {
       renderRecipeListView();
     }
   },
+  '/add-new-recipe': renderAddNewRecipeView,
 };
 
 /**
@@ -52,7 +54,7 @@ const router: TRouter = {
 
     // Extract base route without query parameters
     const baseRoute = route.split('?')[0];
-    
+
     if (routes[baseRoute]) {
       routes[baseRoute]();
       return;

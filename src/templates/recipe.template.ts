@@ -4,7 +4,7 @@ export function renderRecipeViewTemplate(recipe: IRecipe) {
   const ingredientsList = recipe.ingredients
     .map(
       (ingredient) =>
-        `<li class="list-group-item">${ingredient.quantity} ${ingredient.name}</li>`,
+        `<li class="list-group-item">${ingredient.amount} ${ingredient.name}</li>`,
     )
     .join('');
 

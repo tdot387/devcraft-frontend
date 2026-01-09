@@ -46,6 +46,7 @@ export function renderHomeViewTemplate() {
           </div>
         </div>
       </div>
+          <a href="/add-new-recipe">Add a new recipe</a>
     </section>
     `;
 }

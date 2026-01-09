@@ -1,17 +1,17 @@
-import type { IRecipe } from '@/types/recipe.types';
+import type { IIngredient } from '@/types/recipe.types';
 
 export function renderRecipeCard(recipe: any): string {
   // Handle nested recipe structure from Firebase
   const recipeData = recipe.recipe || recipe;
-  
+
   if (!recipeData.ingredients || !recipeData.category) {
     console.warn('Invalid recipe data:', recipe);
     return '';
   }
-  
+
   const ingredientsList = recipeData.ingredients
     .map(
-      (ingredient: any) =>
+      (ingredient: IIngredient) =>
         `<li class="list-group-item">${ingredient.amount} ${ingredient.unit || ''} ${ingredient.name}</li>`,
     )
     .join('');

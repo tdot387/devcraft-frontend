@@ -1,10 +1,10 @@
-interface IIngredient {
+export interface IIngredient {
   name: string;
   amount: string;
   unit: TUnit;
 }
 
-type TUnit = 'g' | 'ml' | 'Stk.' | 'EL' | 'TL';
+export type TUnit = 'g' | 'ml' | 'Stk.' | 'EL' | 'TL';
 
 interface IIngredientWithId extends IIngredient {
   id: string;

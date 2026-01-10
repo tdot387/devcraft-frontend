@@ -13,7 +13,7 @@ export function renderHomeViewTemplate() {
     <div id="home-categories" class="mb-4">
     </div>
     <section>
-    <h3>Beliebte Rezepte</h3>
+    <h3 class="hero-recipe-ovierview">Beliebte Rezepte</h3>
     <div id="recipe-list" class="row row-cols-1 row-cols-md-3 g-4 mt-2">
     </section>
       

@@ -51,6 +51,12 @@ export async function renderHomeView() {
 
       filteredRecipes.forEach((recipe) => {
         const recipeCard = document.createElement('div');
+        const homeRecipeHeader = app.querySelector('.hero-recipe-ovierview')!;
+        if (selectedCategory === 'Beliebte Rezepte') {
+          homeRecipeHeader.textContent = 'Beliebte Rezepte';
+        } else {
+          homeRecipeHeader.textContent = `Kategorie ${selectedCategory}`;
+        }
         recipeCard.className = 'col';
         recipeCard.innerHTML = `
             <div class="card shadow h-100">

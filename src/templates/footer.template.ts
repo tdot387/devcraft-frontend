@@ -1,7 +1,7 @@
 export function renderFooterTemplate(): string {
   return `
-    <footer class="bg-dark text-light py-4">
-      <div class="container">
+    <footer class="hr py-4 border-top">
+      <div class="container   divider-top">
         <div class="row">
           <div class="col-md-6">
             <h5>Rezept App</h5>

@@ -1,38 +1,38 @@
-.recipe-hero-image {
-  position: relative;
+/* Minimal Global Styles */
+body {
+  background-color: #f8f9fa; /* Bootstrap light */
+}
+
+/* Fixed Footer Layout */
+html, body {
+  height: 100vh;
   overflow: hidden;
-  border-radius: 0.5rem;
 }
 
-.recipe-hero-image img {
-  transition: transform 0.3s ease;
+body {
+  display: flex;
+  flex-direction: column;
 }
 
-.recipe-hero-image:hover img {
-  transform: scale(1.05);
+#header {
+  flex-shrink: 0;
 }
 
-.overlay-text {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 1rem 2rem;
-  border-radius: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+#app {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 1rem;
 }
 
-.recipe-hero-image:hover .overlay-text {
-  opacity: 1;
+#footer {
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
 }
 
-.feature-card {
-  transition: transform 0.2s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-.recipe-hero-image img {
-  max-height: 300px;
-  width: 100%;
-  object-fit: cover;
+/* Ensure Bootstrap typography works */
+h1, h2, h3, h4, h5, h6 {
+  font-size: revert !important;
+  font-weight: revert !important;
 }

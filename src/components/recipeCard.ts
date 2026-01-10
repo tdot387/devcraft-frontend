@@ -49,7 +49,7 @@ export function renderRecipeCard(recipe: any): string {
         </div>
         
         <div class="card-footer">
-          <button class="btn btn-primary btn-sm" onclick="router.nav('/recipe?id=${recipe.id}')">
+          <button class="btn btn-success btn-sm" onclick="router.nav('/recipe?id=${recipe.id}')">
             Rezept anzeigen
           </button>
         </div>

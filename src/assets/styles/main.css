@@ -1,0 +1,38 @@
+/* Minimal Global Styles */
+body {
+  background-color: #f8f9fa; /* Bootstrap light */
+}
+
+/* Fixed Footer Layout */
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#header {
+  flex-shrink: 0;
+}
+
+#app {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+#footer {
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+}
+
+/* Ensure Bootstrap typography works */
+h1, h2, h3, h4, h5, h6 {
+  font-size: revert !important;
+  font-weight: revert !important;
+}

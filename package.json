@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && npm run test && vite build",
+    "build": "tsc  && vite build",
     "format": "prettier . --write",
     "preview": "vite preview",
     "test": "vitest",

@@ -1,11 +1,14 @@
-import type { IRecipeWithId } from '@/types/recipe.types';
+import type { IRecipe } from '@/types/recipe.types';
 
 export function renderCategoryButtons(categories: string[]): string {
   return `
     <div class="d-flex overflow-auto gap-2 pb-2">
       ${categories
         .map((category, index) => {
-          const btnClass = index === 0 ? 'btn btn-success flex-shrink-0' : 'btn btn-outline-secondary flex-shrink-0';
+          const btnClass =
+            index === 0
+              ? 'btn btn-success flex-shrink-0'
+              : 'btn btn-outline-secondary flex-shrink-0';
           return `<button class="${btnClass}" data-category="${category}">${category}</button>`;
         })
         .join('')}
@@ -13,8 +16,10 @@ export function renderCategoryButtons(categories: string[]): string {
   `;
 }
 
-export function renderSimpleRecipeCards(recipes: IRecipeWithId[]): string {
-  return recipes.map(recipe => `
+export function renderSimpleRecipeCards(recipes: IRecipe[]): string {
+  return recipes
+    .map(
+      (recipe) => `
     <div class="col">
       <div class="card shadow h-100">
         <img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.name}">
@@ -25,17 +30,25 @@ export function renderSimpleRecipeCards(recipes: IRecipeWithId[]): string {
         </div>
       </div>
     </div>
-  `).join('');
+  `,
+    )
+    .join('');
 }
 
-export function filterRecipesByCategory(recipes: IRecipeWithId[], category: string): IRecipeWithId[] {
+export function filterRecipesByCategory(
+  recipes: IRecipe[],
+  category: string,
+): IRecipe[] {
   if (category === 'Beliebte Rezepte') {
     return recipes;
   }
-  return recipes.filter(recipe => recipe.category?.includes(category));
+  return recipes.filter((recipe) => recipe.category?.includes(category));
 }
 
-export function updateCategoryButtons(homeCategories: Element, activeButton: HTMLElement): void {
+export function updateCategoryButtons(
+  homeCategories: Element,
+  activeButton: HTMLElement,
+): void {
   homeCategories.querySelectorAll('button').forEach((btn) => {
     btn.className = 'btn btn-outline-secondary flex-shrink-0';
   });

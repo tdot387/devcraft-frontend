@@ -10,10 +10,10 @@ const mockRecipes: IRecipe[] = [
     instructions:
       '1. Pasta kochen 2. Speck anbraten 3. Ei und Käse vermischen 4. Alles zusammen mischen',
     ingredients: [
-      { name: 'Spaghetti', quantity: '400g' },
-      { name: 'Speck', quantity: '200g' },
-      { name: 'Eier', quantity: '3 Stück' },
-      { name: 'Parmesan', quantity: '100g' },
+      { name: 'Spaghetti', amount: '400g', unit: 'g' },
+      { name: 'Speck', amount: '200', unit: 'g' },
+      { name: 'Eier', amount: '3', unit: 'Stk.' },
+      { name: 'Parmesan', amount: '100', unit: 'g' },
     ],
     favorite: false,
     image:
@@ -27,9 +27,9 @@ const mockRecipes: IRecipe[] = [
     instructions:
       '1. Salat waschen 2. Dressing zubereiten 3. Croutons rösten 4. Alles vermischen',
     ingredients: [
-      { name: 'Römersalat', quantity: '2 Köpfe' },
-      { name: 'Parmesan', quantity: '50g' },
-      { name: 'Croutons', quantity: '100g' },
+      { name: 'Römersalat', amount: '2 Köpfe', unit: 'Stk.' },
+      { name: 'Parmesan', amount: '50', unit: 'g' },
+      { name: 'Croutons', amount: '100', unit: 'g' },
     ],
     favorite: true,
     image:
@@ -43,10 +43,10 @@ const mockRecipes: IRecipe[] = [
     instructions:
       '1. Fleisch klopfen 2. Panieren 3. In Öl braten 4. Mit Zitrone servieren',
     ingredients: [
-      { name: 'Kalbsschnitzel', quantity: '4 Stück' },
-      { name: 'Mehl', quantity: '100g' },
-      { name: 'Eier', quantity: '2 Stück' },
-      { name: 'Semmelbrösel', quantity: '200g' },
+      { name: 'Kalbsschnitzel', amount: '4', unit: 'Stk.' },
+      { name: 'Mehl', amount: '100', unit: 'g' },
+      { name: 'Eier', amount: '2', unit: 'Stk.' },
+      { name: 'Semmelbrösel', amount: '200', unit: 'g' },
     ],
     favorite: false,
     image:

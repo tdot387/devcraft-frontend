@@ -1,5 +1,3 @@
-import type { IRecipe } from '@/types/recipe.types';
-
 export function renderRecipeViewTemplate(recipe: any) {
   const recipeData = recipe;
 

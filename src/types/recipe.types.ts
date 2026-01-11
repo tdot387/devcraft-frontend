@@ -6,10 +6,6 @@ export interface IIngredient {
 
 export type TUnit = 'g' | 'ml' | 'Stk.' | 'EL' | 'TL';
 
-interface IIngredientWithId extends IIngredient {
-  id: string;
-}
-
 export interface IRecipe {
   id?: string;
   name: string;
@@ -19,8 +15,4 @@ export interface IRecipe {
   ingredients: IIngredient[];
   favorite: boolean;
   imageUrl: string;
-}
-
-export interface IRecipeWithId extends IRecipe {
-  id: string;
 }

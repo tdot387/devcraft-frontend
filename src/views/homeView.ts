@@ -1,5 +1,5 @@
 // Startseite (Suche + Rezeptliste)
-import { getRecipes } from '@/services/recipe.service';
+import { getRecipes } from '@/services/recipes.service';
 import { renderHomeViewTemplate } from '@/templates/home.template';
 import { getCategories } from '@/utils';
 import {

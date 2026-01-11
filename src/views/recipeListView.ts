@@ -1,6 +1,6 @@
 import { renderRecipeListTemplate } from '@/templates/recipeList.template';
 import { renderRecipeCard } from '@/components/recipeCard';
-import { getRecipes } from '@/services/recipe.service';
+import { getRecipes } from '@/services/recipes.service';
 
 export async function renderRecipeListView() {
   const app = document.querySelector('#app')!;

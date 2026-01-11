@@ -11,6 +11,7 @@ interface IIngredientWithId extends IIngredient {
 }
 
 export interface IRecipe {
+  id?: string;
   name: string;
   category: string[];
   description: string;

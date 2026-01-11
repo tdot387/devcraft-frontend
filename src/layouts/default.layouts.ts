@@ -6,7 +6,7 @@ export function renderDefaultLayout() {
   const footer = document.querySelector('#footer')!;
   const app = document.querySelector('#app')!;
 
-  app.className = 'flex-grow-1 container';
+  app.className = 'flex-grow-1';
 
   header.innerHTML = renderHeader();
   footer.innerHTML = renderFooter();

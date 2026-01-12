@@ -2,6 +2,7 @@ import { renderRecipeViewTemplate } from '@/templates/recipe.template';
 import { getQueryParam } from '@/core/utils/urlUtils';
 import { getRecipeById } from '@/services/recipeById.service';
 import type { IIngredient } from '@/types/recipe.types';
+import { renderLoadingSpinner } from '@/components/loadingSpinner';
 
 export async function renderRecipeView() {
   const app = document.querySelector('#app')!;
@@ -13,7 +14,7 @@ export async function renderRecipeView() {
     return;
   }
 
-  app.innerHTML = '<div class="text-center">Lade Rezept...</div>';
+  app.innerHTML = renderLoadingSpinner();
 
   const recipe = await getRecipeById(recipeId);
   if (!recipe) {
@@ -28,9 +29,14 @@ export async function renderRecipeView() {
   (document.getElementById('recipe-image')! as HTMLImageElement).src =
     recipe.imageUrl;
   document.getElementById('recipe-title')!.textContent = recipe.name;
-  document.getElementById('preparation-time')!.textContent = recipe.preparationTime || '∞';
-  document.getElementById('recipe-category')!.textContent =
-    recipe.category?.join(', ') || '';
+  document.getElementById('preparation-time')!.textContent =
+    recipe.preparationTime || '∞';
+  document.getElementById('recipe-category')!.innerHTML =
+    recipe.category
+      ?.map(
+        (cat: string) => `<span class="badge bg-success rounded-pill">${cat}</span>`,
+      )
+      .join(' ') || '';
 
   document.getElementById('ingredients-title')!.innerHTML =
     '<span class="text-success">🥬</span> Zutaten';

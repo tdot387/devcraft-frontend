@@ -50,6 +50,12 @@ export async function renderRecipeView() {
 
   document.getElementById('preparation-title')!.innerHTML =
     '<span class="text-success">👩‍🍳</span> Zubereitung';
-  document.getElementById('preparation-steps')!.textContent =
-    recipe.instructions;
+  document.getElementById('preparation-steps')!.innerHTML =
+    recipe.instructions
+    ?.map(
+      (instruction: string) =>
+        `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
+    )
+    .join('') || '';
+
 }

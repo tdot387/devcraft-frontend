@@ -9,9 +9,9 @@ export type TUnit = 'g' | 'ml' | 'Stk.' | 'EL' | 'TL';
 export interface IRecipe {
   id?: string;
   name: string;
-  category: string[];
+  categories: string[];
   description: string;
-  instructions: string;
+  instructions: string[];
   ingredients: IIngredient[];
   favorite: boolean;
   imageUrl: string;

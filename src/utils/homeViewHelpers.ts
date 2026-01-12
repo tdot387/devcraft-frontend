@@ -21,12 +21,12 @@ export function renderSimpleRecipeCards(recipes: IRecipe[]): string {
     .map(
       (recipe) => `
     <div class="col">
-      <div class="card shadow h-100">
-        <img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.name}">
-        <div class="card-body">
+      <div class="card shadow h-100 d-flex flex-column">
+        <img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.name}" style="height: 200px; object-fit: cover;">
+        <div class="card-body d-flex flex-column">
           <h5 class="card-title">${recipe.name}</h5>
-          <p class="card-text">${recipe.description}</p>
-          <button onClick="router.nav('/recipe?id=${recipe.id}')" class="btn btn-success">Rezept ansehen</button>
+          <p class="card-text flex-grow-1">${recipe.description}</p>
+          <button onClick="router.nav('/recipe?id=${recipe.id}')" class="btn btn-success mt-auto">Rezept ansehen</button>
         </div>
       </div>
     </div>

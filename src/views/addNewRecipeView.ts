@@ -7,7 +7,8 @@ export function renderAddNewRecipeView() {
   const app = document.querySelector('#app')!;
   app.innerHTML = renderAddNewRecipeTemplate();
 
-  document.querySelector('#back-button-container')!.innerHTML = renderBackButton();
+  document.querySelector('#back-button-container')!.innerHTML =
+    renderBackButton();
 
   const newRecipeNameInput = document.getElementById(
     'new-recipe-name',
@@ -133,12 +134,11 @@ export function renderAddNewRecipeView() {
     const newRecipe: IRecipe = {
       name: newRecipeNameInput.value,
       description: newRecipeDescriptionInput.value,
-      categories: [...newRecipeCategory],
+      category: [...newRecipeCategory],
       favorite: false,
       imageUrl: newRecipeImgUrl.value,
       ingredients: [...newRecipeIngredients],
-      instructions: [newRecipeInstructionsInput.value],
-      prepTime: '30 Min',
+      instructions: newRecipeInstructionsInput.value,
     };
 
     createRecipe(newRecipe);

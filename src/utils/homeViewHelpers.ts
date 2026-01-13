@@ -42,10 +42,7 @@ export function filterRecipesByCategory(
   if (category === 'Beliebte Rezepte') {
     return recipes;
   }
-  return recipes.filter((recipe) => {
-    const categoryData = recipe.categories || recipe.category; // remove recipe.category when categories is implemented in firebase
-    return categoryData?.includes(category);
-  });
+  return recipes.filter((recipe) => recipe.categories?.includes(category));
 }
 
 export function updateCategoryButtons(

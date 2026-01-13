@@ -22,7 +22,7 @@ export async function renderRecipeView() {
       '<div class="alert alert-danger">Rezept nicht gefunden</div>';
     return;
   }
-  console.log(recipe);
+
   app.innerHTML = renderRecipeViewTemplate();
 
   // Fill template with recipe data
@@ -34,7 +34,8 @@ export async function renderRecipeView() {
   document.getElementById('recipe-category')!.innerHTML =
     recipe.category
       ?.map(
-        (cat: string) => `<span class="badge bg-success rounded-pill">${cat}</span>`,
+        (cat: string) =>
+          `<span class="badge bg-success rounded-pill">${cat}</span>`,
       )
       .join(' ') || '';
 
@@ -52,10 +53,9 @@ export async function renderRecipeView() {
     '<span class="text-success">👩‍🍳</span> Zubereitung';
   document.getElementById('preparation-steps')!.innerHTML =
     recipe.instructions
-    ?.map(
-      (instruction: string) =>
-        `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
-    )
-    .join('') || '';
-
+      ?.map(
+        (instruction: string) =>
+          `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
+      )
+      .join('') || '';
 }

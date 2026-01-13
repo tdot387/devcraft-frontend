@@ -1,4 +1,5 @@
 // Startseite (Suche + Rezeptliste)
+import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { getRecipes } from '@/services/recipes.service';
 import { renderHomeViewTemplate } from '@/templates/home.template';
 import { getCategories } from '@/utils';
@@ -14,6 +15,7 @@ export async function renderHomeView() {
   const app = document.querySelector('#app')!;
   app.innerHTML = renderHomeViewTemplate();
   const recipeList = app.querySelector('#recipe-list')!;
+  recipeList.innerHTML = renderLoadingSpinner();
   const recipes = await getRecipes();
   const homeCategories = app.querySelector('#home-categories')!;
   const categories = ['Beliebte Rezepte', ...getCategories(recipes)];
@@ -26,6 +28,12 @@ export async function renderHomeView() {
     if (target.matches('button')) {
       updateCategoryButtons(homeCategories, target);
       const selectedCategory = target.getAttribute('data-category')!;
+
+      if (selectedCategory === 'Beliebte Rezepte') {
+        updateRecipeHeader(app, selectedCategory);
+        recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(0, 7)); // just show the first 7 recipes as popular
+        return;
+      }
       const filteredRecipes = filterRecipesByCategory(
         recipes,
         selectedCategory,
@@ -36,10 +44,5 @@ export async function renderHomeView() {
     }
   });
 
-  // Initial render click the "Beliebte Rezepte" button to show all recipes
-  recipeList.innerHTML = renderSimpleRecipeCards(recipes);
-  const firstButton = homeCategories.querySelector('button');
-  if (firstButton) {
-    firstButton.click();
-  }
+  recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(0, 7));
 }

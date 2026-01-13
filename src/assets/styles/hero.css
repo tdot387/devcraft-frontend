@@ -23,3 +23,18 @@
   z-index: 2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
+
+@media (min-width: 768px) {
+  .hero-section {
+    min-height: 400px;
+    max-height: 400px;
+  }
+
+  .hero-h1 {
+    font-size: 3.5rem !important;
+  }
+
+  .hero-content .lead {
+    font-size: 1.5rem;
+  }
+}

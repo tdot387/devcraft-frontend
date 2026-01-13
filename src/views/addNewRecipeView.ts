@@ -44,14 +44,24 @@ export function renderAddNewRecipeView() {
   ) as HTMLInputElement;
   const newRecipeInstructionsInput = document.getElementById(
     'new-recipe-instructions',
-  ) as HTMLTextAreaElement;
+  ) as HTMLInputElement;
+  const addInstructionsBtn = document.getElementById(
+    'add-new-instruction-btn'
+  ) as HTMLButtonElement;
+  const newRecipePrepTimeInput = document.getElementById(
+    'new-recipe-prep-time',
+  ) as HTMLInputElement;
+  const newlyAddedInstructions = document.getElementById(
+    'newly-added-instruction'
+  ) as HTMLElement;
 
-  let newRecipeCategory: string[] = [];
+  let newRecipeCategories: string[] = [];
   let newRecipeIngredients: IIngredient[] = [];
+  let newRecipeInstructions: string[] = [];
 
   /***
-   * These two functions push a new category into the newRecipeCategory array
-   * and then display the newly added category below the category input field
+   * Start of functions that push a new category into the newRecipeCategory array
+   * and then display the newly added category below the category input field.
    *
    */
 
@@ -66,7 +76,7 @@ export function renderAddNewRecipeView() {
     const value = newRecipeCategoryInput.value.trim();
     if (!value) return;
 
-    newRecipeCategory.push(value);
+    newRecipeCategories.push(value);
     newRecipeCategoryInput.value = '';
 
     showNewlyAddedCategories();
@@ -79,13 +89,29 @@ export function renderAddNewRecipeView() {
   let showNewlyAddedCategories = () => {
     newlyAddedCategories.textContent = '';
 
-    for (let category of newRecipeCategory) {
+    for (let category of newRecipeCategories) {
       const cat = document.createElement('span');
       cat.textContent = category;
       cat.classList.add('badge', 'text-bg-success', 'me-2');
       newlyAddedCategories.appendChild(cat);
     }
   };
+
+  /*** End new categories functions */
+
+  /***
+   * Start of functions that push a new ingredient into the newRecipeIngredients array
+   * and then display the newly added ingredient below the ingredient input field.
+   *
+   */
+
+  newRecipeIngredientsInputName.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+
+    addIngredientToArray();
+  });
+
 
   let addIngredientToArray = () => {
     const nameValue = newRecipeIngredientsInputName.value.trim();
@@ -102,13 +128,6 @@ export function renderAddNewRecipeView() {
     showNewlyAddedIngredients();
   };
 
-  newRecipeIngredientsInputName.addEventListener('keydown', (event) => {
-    if (event.key !== 'Enter') return;
-    event.preventDefault();
-
-    addIngredientToArray();
-  });
-
   addIngredientBtn.addEventListener('click', () => {
     addIngredientToArray();
   });
@@ -124,17 +143,67 @@ export function renderAddNewRecipeView() {
     }
   };
 
+  newRecipeInstructionsInput.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+
+    addInstructionToArray();
+  })
+
+  let addInstructionToArray = () => {
+    const value = newRecipeInstructionsInput.value.trim();
+    if (!value) return;
+
+    newRecipeInstructions.push(value);
+    newRecipeInstructionsInput.value = '';
+
+    showNewlyAddedInstructions();
+  }
+
+  addInstructionsBtn.addEventListener('click', () => {
+    addInstructionToArray();
+  })
+
+  let showNewlyAddedInstructions = () => {
+    newlyAddedInstructions.textContent = '';
+
+    for (let instruction of newRecipeInstructions) {
+      const instr = document.createElement('p');
+      instr.textContent = instruction;
+      newlyAddedInstructions.appendChild(instr);
+    }
+  }
+
+
+
+
+  /** Helper function that checks if array is empty */
+  const isEmptyArray = (arr: string[] | IIngredient[]) => !Array.isArray(arr) || arr.length === 0;
+
   newRecipeForm.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    if (newRecipeNameInput.value.trim() == ''
+      || newRecipeDescriptionInput.value.trim() == ''
+      || newRecipeImgUrl.value.trim() == ''
+      || newRecipePrepTimeInput.value.trim() == ''
+      || isEmptyArray(newRecipeCategories)
+      || isEmptyArray(newRecipeIngredients)
+      || isEmptyArray(newRecipeInstructions)
+    ) {
+      console.log('Cant add stuff due to empty fields')
+      return
+    }
 
     const newRecipe: IRecipe = {
       name: newRecipeNameInput.value,
       description: newRecipeDescriptionInput.value,
-      categories: [...newRecipeCategory],
+      categories: [...newRecipeCategories],
       favorite: false,
       imageUrl: newRecipeImgUrl.value,
       ingredients: [...newRecipeIngredients],
-      instructions: [newRecipeInstructionsInput.value],
+      instructions: [...newRecipeInstructions],
+      prepTime: newRecipePrepTimeInput.value + ' Min'
     };
 
     createRecipe(newRecipe);
@@ -142,7 +211,7 @@ export function renderAddNewRecipeView() {
     /*** UI und State reset */
     newRecipeForm.reset();
     newRecipeIngredients = [];
-    newRecipeCategory = [];
+    newRecipeCategories = [];
     newlyAddedCategories.textContent = '';
   });
 }

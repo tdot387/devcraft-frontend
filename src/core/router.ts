@@ -14,10 +14,9 @@ const routes: Record<string, RouteHandler> = {
     const recipeId = getQueryParam('id');
     if (recipeId) {
       renderRecipeView();
-    } else {
-      renderRecipeListView();
     }
   },
+  '/recipes': renderRecipeListView,
   '/add-new-recipe': renderAddNewRecipeView,
 };
 

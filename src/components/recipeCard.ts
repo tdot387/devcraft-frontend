@@ -1,56 +1,32 @@
-import type { IIngredient } from '@/types/recipe.types';
+import type { IRecipe } from '@/types/recipe.types';
 
-export function renderRecipeCard(recipe: any): string {
-  // Handle nested recipe structure from Firebase
-  const recipeData = recipe.recipe || recipe;
-
-  if (!recipeData.ingredients || !recipeData.category) {
-    console.warn('Invalid recipe data:', recipe);
-    return '';
-  }
-
-  const ingredientsList = recipeData.ingredients
-    .map(
-      (ingredient: IIngredient) =>
-        `<li class="list-group-item">${ingredient.amount} ${ingredient.unit || ''} ${ingredient.name}</li>`,
-    )
-    .join('');
-
-  const categories = (recipeData.category || [])
+export function renderRecipeCard(recipe: IRecipe): string {
+  const categories = recipe.categories
     .map(
       (category: string) =>
-        `<span class="badge bg-secondary me-1">${category}</span>`,
+        `<span class="badge bg-success rounded-pill">${category}</span>`,
     )
-    .join('');
-  // toggleFavourite is an another ticket - just a placeholder for now
+    .join(' ');
+
   return `
     <div class="col-md-6 col-lg-4 mb-4">
       <div class="card h-100">
-        ${recipeData.imageUrl ? `<img src="${recipeData.imageUrl}" class="card-img-top" alt="${recipeData.name}" style="height: 200px; object-fit: cover;">` : ''}
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <h5 class="card-title">${recipeData.name}</h5>
-            <button class="btn btn-sm ${recipeData.favorite ? 'btn-danger' : 'btn-outline-danger'}" 
-                    onclick="toggleFavorite('${recipeData.name}')">
-              <i class="bi bi-heart${recipeData.favorite ? '-fill' : ''}"></i>
-            </button>
+        ${recipe.imageUrl ? `<img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.name}" style="height: 200px; object-fit: cover;">` : ''}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">${recipe.name}</h5>
+          <div class="d-flex gap-2 mb-2">
+            <small class="text-muted d-flex align-items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+              </svg>
+              <span>${recipe.prepTime}</span>
+            </small>
           </div>
-          
           <div class="mb-2">${categories}</div>
-          
-          <p class="card-text">${recipeData.description}</p>
-          
-          <div class="mb-3">
-            <h6>Zutaten:</h6>
-            <ul class="list-group list-group-flush">
-              ${ingredientsList}
-            </ul>
-          </div>
-        </div>
-        
-        <div class="card-footer">
-          <button class="btn btn-success btn-sm" onclick="router.nav('/recipe?id=${recipe.id}')">
-            Rezept anzeigen
+          <p class="card-text flex-grow-1">${recipe.description}</p>
+          <button class="btn btn-success mt-auto" onclick="router.nav('/recipe?id=${recipe.id}')">
+            Rezept ansehen
           </button>
         </div>
       </div>

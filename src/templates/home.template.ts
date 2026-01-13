@@ -7,6 +7,7 @@ export function renderHomeViewTemplate() {
       <div class="hero-content position-absolute top-50 start-50 translate-middle text-white">
         <h1 class="hero-h1 display-4 mb-2">Was kochst du heute?</h1>
         <p class="lead mb-4">Finde leckere Rezepte für jeden Tag!</p>
+        <button id="explore-recipes-btn" class="btn btn-hero btn-lg" onClick="router.nav('/recipes')">Rezepte entdecken</button>
       </div>
     </section>
     <section class="container mb-5">

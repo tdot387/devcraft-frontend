@@ -1,6 +1,8 @@
 export function renderAddNewRecipeTemplate() {
   return `
-    <div class="mt-5"> 
+    <div class="container mt-5"> 
+      <div class="mb-3" id="back-button-container">
+      </div>
       
       <h1>Fügen Sie ein neues Rezept hinzu</h1>
 

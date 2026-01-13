@@ -1,15 +1,17 @@
 export function renderRecipeViewTemplate(): string {
   return `
-    <section class="recipe-view">
+    <section class="recipe-view ">
+      <div class="container mb-3" id="back-button-container" >
+      </div>
       <div class="container mb-4">
         <img id="recipe-image" alt="Rezeptbild" class="img-fluid rounded" style="max-height: 600px; object-fit: cover; width: inherit" />
       </div>
       <div class="container px-4 border-bottom pb-3 mb-3">
         <h2 id="recipe-title"></h2>
-        <div class="d-flex gap-2">
-          <p id="preparation-time"></p>
-          <p class="border-end pe-2"></p>
-          <p id="recipe-category"></p>
+        <div class="d-flex gap-2 align-items-center">
+          <p id="preparation-time" class="mb-0 d-flex align-items-center gap-1"></p>
+          <p class="border-end pe-2 mb-0" style="height: 20px;"></p>
+          <p id="recipe-category" class="mb-0"></p>
         </div>
       </div>
       <div class="container px-4">

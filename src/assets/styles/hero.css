@@ -1,5 +1,5 @@
 .hero-section {
-  min-height: 250px;
+  min-height: 300px;
   max-height: 350px;
   overflow: hidden;
 }
@@ -22,6 +22,20 @@
 .hero-content {
   z-index: 2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.btn-hero {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  backdrop-filter: blur(8px);
+  font-weight: 600;
+}
+
+.btn-hero:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: white;
+  color: white;
 }
 
 @media (min-width: 768px) {

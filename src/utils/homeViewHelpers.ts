@@ -42,7 +42,7 @@ export function filterRecipesByCategory(
   if (category === 'Beliebte Rezepte') {
     return recipes;
   }
-  return recipes.filter((recipe) => recipe.category?.includes(category));
+  return recipes.filter((recipe) => recipe.categories?.includes(category));
 }
 
 export function updateCategoryButtons(

@@ -3,6 +3,17 @@ body {
   background-color: #f8f9fa; /* Bootstrap light */
 }
 
+/* Card Hover Effect */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
 /* Fixed Footer Layout */
 html, body {
   height: 100vh;

@@ -10,7 +10,7 @@ export function renderRecipeCard(recipe: IRecipe): string {
 
   return `
     <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card h-100">
+      <div class="card shadow h-100 card-hover">
         ${recipe.imageUrl ? `<img src="${recipe.imageUrl}" class="card-img-top" alt="${recipe.name}" style="height: 200px; object-fit: cover;">` : ''}
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">${recipe.name}</h5>

@@ -1,7 +1,7 @@
 export function renderRecipeViewTemplate(): string {
   return `
-    <section class="recipe-view">
-      <div class="container mb-3" id="back-button-container">
+    <section class="recipe-view ">
+      <div class="container mb-3" id="back-button-container" >
       </div>
       <div class="container mb-4">
         <img id="recipe-image" alt="Rezeptbild" class="img-fluid rounded" style="max-height: 600px; object-fit: cover; width: inherit" />

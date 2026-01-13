@@ -130,11 +130,11 @@ export function renderAddNewRecipeView() {
     const newRecipe: IRecipe = {
       name: newRecipeNameInput.value,
       description: newRecipeDescriptionInput.value,
-      category: [...newRecipeCategory],
+      categories: [...newRecipeCategory],
       favorite: false,
       imageUrl: newRecipeImgUrl.value,
       ingredients: [...newRecipeIngredients],
-      instructions: newRecipeInstructionsInput.value,
+      instructions: [newRecipeInstructionsInput.value],
     };
 
     createRecipe(newRecipe);

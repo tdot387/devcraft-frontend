@@ -1,26 +1,19 @@
 .filter {
-  max-width: 120px;
+  max-width: 130px;
   max-height: 40px;
 }
 
-.add-new-mobile {
-  margin-left: -150px;
+@media (min-width: 768px) {
+  .filter {
+    max-width: 130px;
+    max-height: 45px;
+  }
 }
 
 @media (min-width: 768px) {
-
-  .filter {
-    max-height: 45px;
-    max-width: 130px;
+  .search-container {
+    order: 1;
+    max-width: 350px;
+    margin-left: 1rem;
   }
-
-  .add-new {
-    min-height: 61px;
-    max-width: 130px;
-  }
-
-  #recipe-search {
-    max-width: 535px;
-  }
-
 }

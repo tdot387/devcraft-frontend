@@ -10,18 +10,13 @@ export function renderDefaultLayout() {
 
   header.innerHTML = renderHeader();
   footer.innerHTML = renderFooter();
-  // Registers the visible search input on resize
-  window.addEventListener("resize", () => {
-    registerHeaderSearch(document.body.clientWidth);
-  });
-  registerHeaderSearch(document.body.clientWidth);
+  registerHeaderSearch();
 }
 
-function registerHeaderSearch(screenWidth: number) {
-  const searchInput: HTMLInputElement = screenWidth >= 768 ?
-    document.getElementById("search-input") as HTMLInputElement : document.getElementById("search-input-mobile") as HTMLInputElement;
+function registerHeaderSearch() {
+  const searchInput: HTMLInputElement = document.getElementById("search-input") as HTMLInputElement;
   if (searchInput) {
-    searchInput.addEventListener('keyup', (event: KeyboardEvent) => {
+    searchInput.addEventListener('keyup', () => {
       const searchText = searchInput.value;
       const searchEvent = new CustomEvent("executeSearch", { detail: { searchText } });
       window.dispatchEvent(searchEvent);

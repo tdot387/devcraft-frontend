@@ -59,6 +59,13 @@ export async function renderRecipeView() {
       )
       .join(' ') || '';
 
+  for(let i = 1; i <= 10; i++) {
+    const option = document.createElement('option');
+    option.text = i.toString();
+    option.value = i.toString();
+    elements.servings.appendChild(option);
+  }
+
   elements.ingredientsTitle.innerHTML =
     '<span class="text-success">🥬</span> Zutaten';
 

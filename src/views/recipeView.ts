@@ -38,7 +38,15 @@ export async function renderRecipeView() {
     ingredientsList: document.getElementById('ingredients-list')!,
     preparationTitle: document.getElementById('preparation-title')!,
     preparationSteps: document.getElementById('preparation-steps')!,
+    servings: document.getElementById('servings')! as HTMLSelectElement
   };
+
+  const baseIngredients = recipe.ingredients ?? [];
+
+  function formatIngredientsAmount(number: number) {
+    const rounded = Math.round((number + Number.EPSILON) * 100) / 100;
+    return Number.isInteger(rounded) ? String(rounded) : String(rounded);
+  }
 
   elements.image.src = recipe.imageUrl;
   elements.title.textContent = recipe.name;
@@ -51,15 +59,34 @@ export async function renderRecipeView() {
       )
       .join(' ') || '';
 
+  for(let i = 1; i <= 10; i++) {
+    const option = document.createElement('option');
+    option.text = i.toString();
+    option.value = i.toString();
+    elements.servings.appendChild(option);
+  }
+
   elements.ingredientsTitle.innerHTML =
     '<span class="text-success">🥬</span> Zutaten';
-  elements.ingredientsList.innerHTML =
-    recipe.ingredients
-      ?.map(
-        (ing: IIngredient) =>
-          `<li class="d-flex align-items-center mb-2"><span class="me-2 text-success">✓</span>${ing.amount}${ing.unit || ''} ${ing.name}</li>`,
-      )
-      .join('') || '';
+
+  function renderIngredients(servings: number) {
+    elements.ingredientsList.innerHTML =
+      baseIngredients
+        ?.map(
+          (ing: IIngredient) => {
+            const amount = Number(ing.amount) * servings;
+            const amountText = Number.isFinite(amount) ? formatIngredientsAmount(amount) : '';
+
+            return `<li class="d-flex align-items-center mb-2"><span class="me-2 text-success">✓</span>${amountText}${ing.unit || ''} ${ing.name}</li>`;
+          })
+        .join('') || '';
+  }
+
+  renderIngredients(Number(elements.servings.value));
+
+  elements.servings.addEventListener('change', () => {
+    renderIngredients(Number(elements.servings.value))
+  })
 
   document.getElementById('preparation-title')!.innerHTML =
     '<span class="text-success">👩‍🍳</span> Zubereitung';
@@ -71,3 +98,4 @@ export async function renderRecipeView() {
       )
       .join('') || '';
 }
+

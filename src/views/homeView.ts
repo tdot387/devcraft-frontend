@@ -19,9 +19,7 @@ export async function renderHomeView() {
   const recipes = await getRecipes();
   const homeCategories = app.querySelector('#home-categories')!;
   const categories = ['Beliebte Rezepte', ...getCategories(recipes)];
-
   homeCategories.innerHTML = renderCategoryButtons(categories);
-
   homeCategories.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
 

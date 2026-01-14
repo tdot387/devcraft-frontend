@@ -23,7 +23,7 @@ export async function renderRecipeView() {
       '<div class="alert alert-danger">Rezept nicht gefunden</div>';
     return;
   }
-  console.log(recipe);
+
   app.innerHTML = renderRecipeViewTemplate();
 
   document.querySelector('#back-button-container')!.innerHTML =
@@ -61,8 +61,13 @@ export async function renderRecipeView() {
       )
       .join('') || '';
 
-  elements.preparationTitle.innerHTML =
-    '<span class="text-success">👩🍳</span> Zubereitung';
-  elements.preparationSteps.innerHTML =
-    recipe.instructions?.map((step: string) => `<p>${step}</p>`).join('') || '';
+  document.getElementById('preparation-title')!.innerHTML =
+    '<span class="text-success">👩‍🍳</span> Zubereitung';
+  document.getElementById('preparation-steps')!.innerHTML =
+    recipe.instructions
+      ?.map(
+        (instruction: string) =>
+          `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
+      )
+      .join('') || '';
 }

@@ -18,10 +18,13 @@ export function renderDefaultLayout() {
 }
 
 function registerHeaderSearch(screenWidth: number) {
-  const searchInput = screenWidth >= 768 ? document.getElementById("search-input") : document.getElementById("search-input-mobile");
+  const searchInput: HTMLInputElement = screenWidth >= 768 ?
+    document.getElementById("search-input") as HTMLInputElement : document.getElementById("search-input-mobile") as HTMLInputElement;
   if (searchInput) {
     searchInput.addEventListener('keyup', (event: KeyboardEvent) => {
-      console.log(event.key);
+      const searchText = searchInput.value;
+      const searchEvent = new CustomEvent("executeSearch", { detail: { searchText } });
+      window.dispatchEvent(searchEvent);
     })
   }
 }

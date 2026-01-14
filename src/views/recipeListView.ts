@@ -2,6 +2,7 @@ import { renderRecipeListTemplate } from '@/templates/recipeList.template';
 import { renderRecipeCard } from '@/components/recipeCard';
 import { getRecipes } from '@/services/recipes.service';
 import { renderBackButton } from '@/components/backButton';
+import type { IRecipe } from '@/types/recipe.types';
 
 export async function renderRecipeListView() {
   const app = document.querySelector('#app')!;
@@ -21,12 +22,21 @@ export async function renderRecipeListView() {
     return;
   }
 
-  const recipeCards =
-    recipes
-      ?.map((recipe) => {
-        return renderRecipeCard(recipe);
-      })
-      .join('') || '';
+  const recipeCards = mapToRecipeCards(recipes);
 
   recipeListContainer.innerHTML = recipeCards;
+  // search recipies
+  window.addEventListener("executeSearch", (searchEvent) => {
+    const searchValue = (searchEvent as CustomEvent).detail.searchText;
+    recipeListContainer.innerHTML = mapToRecipeCards(recipes, searchValue);
+  })
 }
+
+function mapToRecipeCards(recipes: IRecipe[], searchText?: string) {
+  return (searchText ? recipes.filter(e => e.name.toLowerCase().includes(searchText.toLowerCase())) : recipes)
+    .map((recipe) => {
+      return renderRecipeCard(recipe);
+    })
+    .join('') || '';
+}
+

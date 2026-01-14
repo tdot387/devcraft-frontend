@@ -11,7 +11,7 @@ export function renderHeaderTemplate(): string {
             <span class="fw-bold">Rezept App</span>
           </a>
           
-          <div style="order: 2;">
+          <div id="add-new-recipe" style="order: 2;">
             <button class="btn btn-outline-secondary" onClick="router.nav('/add-new-recipe')">
               <span class="d-none d-md-inline">Neues Rezept Hinzufügen</span>
               <span class="d-md-none">Neues Rezept</span>
@@ -21,7 +21,7 @@ export function renderHeaderTemplate(): string {
             </button>
           </div>
           
-          <div class="search-container d-flex w-100 w-md-auto mt-2 mt-md-0">
+          <div id="search-container" class="search-container d-flex w-100 w-md-auto mt-2 mt-md-0">
             <input id="search-input" type="search" class="form-control me-1 w-75" placeholder="Rezepte suchen..." aria-label="Search recipes">
             <button class="btn btn-success filter w-25">
               Filter

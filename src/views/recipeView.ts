@@ -4,8 +4,13 @@ import { getRecipeById } from '@/services/recipeById.service';
 import type { IIngredient } from '@/types/recipe.types';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { renderBackButton } from '@/components/backButton';
+import { hideAddNewButtonInHeader, hideSearchInputInHeader } from '@/utils/visibilityHelpers';
 
 export async function renderRecipeView() {
+  // Hide search input And add new button
+  hideSearchInputInHeader();
+  hideAddNewButtonInHeader();
+
   const app = document.querySelector('#app')!;
   const recipeId = getQueryParam('id');
 
@@ -59,7 +64,7 @@ export async function renderRecipeView() {
       )
       .join(' ') || '';
 
-  for(let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 10; i++) {
     const option = document.createElement('option');
     option.text = i.toString();
     option.value = i.toString();

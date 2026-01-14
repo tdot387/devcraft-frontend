@@ -47,5 +47,5 @@ export async function renderHomeView() {
   window.addEventListener("executeSearch", (searchEvent) => {
     const searchValue = (searchEvent as CustomEvent).detail.searchText;
     recipeList.innerHTML = renderSimpleRecipeCards(recipes.filter(rec => rec.name.toLowerCase().includes(searchValue.toLowerCase())));
-  })
+  });
 }

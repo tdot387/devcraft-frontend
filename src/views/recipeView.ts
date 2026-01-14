@@ -3,6 +3,7 @@ import { getQueryParam } from '@/core/utils/urlUtils';
 import { getRecipeById } from '@/services/recipeById.service';
 import type { IIngredient } from '@/types/recipe.types';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
+import { renderBackButton } from '@/components/backButton';
 
 export async function renderRecipeView() {
   const app = document.querySelector('#app')!;
@@ -25,23 +26,34 @@ export async function renderRecipeView() {
 
   app.innerHTML = renderRecipeViewTemplate();
 
-  // Fill template with recipe data
-  (document.getElementById('recipe-image')! as HTMLImageElement).src =
-    recipe.imageUrl;
-  document.getElementById('recipe-title')!.textContent = recipe.name;
-  document.getElementById('preparation-time')!.textContent =
-    recipe.preparationTime || '∞';
-  document.getElementById('recipe-category')!.innerHTML =
-    recipe.category
+  document.querySelector('#back-button-container')!.innerHTML =
+    renderBackButton();
+
+  const elements = {
+    image: document.getElementById('recipe-image')! as HTMLImageElement,
+    title: document.getElementById('recipe-title')!,
+    prepTime: document.getElementById('preparation-time')!,
+    category: document.getElementById('recipe-category')!,
+    ingredientsTitle: document.getElementById('ingredients-title')!,
+    ingredientsList: document.getElementById('ingredients-list')!,
+    preparationTitle: document.getElementById('preparation-title')!,
+    preparationSteps: document.getElementById('preparation-steps')!,
+  };
+
+  elements.image.src = recipe.imageUrl;
+  elements.title.textContent = recipe.name;
+  elements.prepTime.innerHTML = `<i class="bi bi-clock"></i> <span>${recipe.prepTime || '∞'}</span>`;
+  elements.category.innerHTML =
+    recipe.categories
       ?.map(
         (cat: string) =>
           `<span class="badge bg-success rounded-pill">${cat}</span>`,
       )
       .join(' ') || '';
 
-  document.getElementById('ingredients-title')!.innerHTML =
+  elements.ingredientsTitle.innerHTML =
     '<span class="text-success">🥬</span> Zutaten';
-  document.getElementById('ingredients-list')!.innerHTML =
+  elements.ingredientsList.innerHTML =
     recipe.ingredients
       ?.map(
         (ing: IIngredient) =>

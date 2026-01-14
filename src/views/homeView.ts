@@ -29,7 +29,7 @@ export async function renderHomeView() {
 
       if (selectedCategory === 'Beliebte Rezepte') {
         updateRecipeHeader(app, selectedCategory);
-        recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(0, 7)); // just show the first 7 recipes as popular
+        recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(7, 14)); // just show some popular recipes
         return;
       }
       const filteredRecipes = filterRecipesByCategory(
@@ -42,5 +42,5 @@ export async function renderHomeView() {
     }
   });
 
-  recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(0, 7));
+  recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(7, 14)); // just show some popular recipes
 }

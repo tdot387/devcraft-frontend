@@ -1,10 +1,14 @@
 import { createRecipe } from '@/services/recipes.service';
 import { renderAddNewRecipeTemplate } from '@/templates/addNewRecipe.template';
 import type { IRecipe, IIngredient, TUnit } from '@/types/recipe.types';
+import { renderBackButton } from '@/components/backButton';
 
 export function renderAddNewRecipeView() {
   const app = document.querySelector('#app')!;
   app.innerHTML = renderAddNewRecipeTemplate();
+
+  document.querySelector('#back-button-container')!.innerHTML =
+    renderBackButton();
 
   const newRecipeNameInput = document.getElementById(
     'new-recipe-name',

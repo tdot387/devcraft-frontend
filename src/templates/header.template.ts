@@ -12,7 +12,7 @@ export function renderHeaderTemplate(): string {
         </a>
         <div class="d-flex align-items-center w-50" #search>
           <!-- Search (desktop only) -->
-          <input type="text" id="recipe-search" class="form-control me-1 d-none d-md-block"
+          <input id="search-input" type="text" id="recipe-search" class="form-control me-1 d-none d-md-block"
                 placeholder="Rezepte oder Kategorien suchen..." aria-label="Search recipes">
           <button class="filter btn btn-success w-25 me-2 d-none d-md-block">
             Filter
@@ -40,7 +40,7 @@ export function renderHeaderTemplate(): string {
     <!-- Search below header (mobile only) -->
         
     <div class="container d-flex mt-2 mb-2 d-md-none">
-      <input
+      <input id="search-input-mobile"
         type="search"
         class="form-control"
         placeholder="Rezepte suchen..."

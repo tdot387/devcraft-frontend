@@ -12,6 +12,22 @@ export function renderRecipeViewTemplate(): string {
           <p id="preparation-time" class="mb-0 d-flex align-items-center gap-1"></p>
           <p class="border-end pe-2 mb-0" style="height: 20px;"></p>
           <p id="recipe-category" class="mb-0"></p>
+          <p class="border-end pe-2 mb-0" style="height: 20px;"></p>
+          <div class="d-flex align-items-center">
+          <select class="form-select-sm me-2" id="servings">
+          <option selected value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          </select>
+          <p class="mb-0">Portionen</p>
+          </div>
         </div>
       </div>
       <div class="container px-4">

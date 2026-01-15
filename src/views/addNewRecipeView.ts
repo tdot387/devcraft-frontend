@@ -2,8 +2,13 @@ import { createRecipe } from '@/services/recipes.service';
 import { renderAddNewRecipeTemplate } from '@/templates/addNewRecipe.template';
 import type { IRecipe, IIngredient, TUnit } from '@/types/recipe.types';
 import { renderBackButton } from '@/components/backButton';
+import { hideSearchInputInHeader, hideAddNewButtonInHeader } from '@/utils/visibilityHelpers';
 
 export function renderAddNewRecipeView() {
+  // Hide search input And add new button
+  hideSearchInputInHeader();
+  hideAddNewButtonInHeader();
+
   const app = document.querySelector('#app')!;
   app.innerHTML = renderAddNewRecipeTemplate();
 

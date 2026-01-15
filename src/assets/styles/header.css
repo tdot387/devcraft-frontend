@@ -1,0 +1,19 @@
+.filter {
+  max-width: 130px;
+  max-height: 40px;
+}
+
+@media (min-width: 768px) {
+  .filter {
+    max-width: 130px;
+    max-height: 45px;
+  }
+}
+
+@media (min-width: 768px) {
+  .search-container {
+    order: 1;
+    max-width: 350px;
+    margin-left: 1rem;
+  }
+}

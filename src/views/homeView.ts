@@ -43,4 +43,9 @@ export async function renderHomeView() {
   });
 
   recipeList.innerHTML = renderSimpleRecipeCards(recipes.slice(7, 14)); // just show some popular recipes
+  // search recipies
+  window.addEventListener("executeSearch", (searchEvent) => {
+    const searchValue = (searchEvent as CustomEvent).detail.searchText;
+    recipeList.innerHTML = renderSimpleRecipeCards(recipes.filter(rec => rec.name.toLowerCase().includes(searchValue.toLowerCase())));
+  });
 }

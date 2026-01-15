@@ -10,4 +10,17 @@ export function renderDefaultLayout() {
 
   header.innerHTML = renderHeader();
   footer.innerHTML = renderFooter();
+  registerHeaderSearch();
 }
+
+function registerHeaderSearch() {
+  const searchInput: HTMLInputElement = document.getElementById("search-input") as HTMLInputElement;
+  if (searchInput) {
+    searchInput.addEventListener('keyup', () => {
+      const searchText = searchInput.value;
+      const searchEvent = new CustomEvent("executeSearch", { detail: { searchText } });
+      window.dispatchEvent(searchEvent);
+    })
+  }
+}
+

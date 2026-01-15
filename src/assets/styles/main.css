@@ -131,10 +131,13 @@ h6 {
 
 .delete-btn {
   position: relative;
+  
 }
 
 .delete-btn:hover {
   color: transparent;
+  cursor: pointer;
+  
 }
 
 .delete-btn:hover::after {
@@ -147,4 +150,5 @@ h6 {
   align-items: center;
   justify-content: center;
   background-color: rgb(198, 5, 5);
+  border-radius: 4px;
 }

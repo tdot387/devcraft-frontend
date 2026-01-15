@@ -98,13 +98,30 @@ export function renderAddNewRecipeView() {
   let showNewlyAddedCategories = () => {
     newlyAddedCategories.textContent = '';
 
-    for (let category of newRecipeCategories) {
-      const cat = document.createElement('span');
-      cat.textContent = category;
-      cat.classList.add('badge', 'text-bg-success', 'me-2');
-      newlyAddedCategories.appendChild(cat);
+    for (let i = 0; i < newRecipeCategories.length; ++i) {
+      const wrapper = document.createElement('span');
+      wrapper.classList.add('btn', 'btn-success', 'btn-sm', 'delete-btn', 'me-2', 'mb-2');
+      wrapper.textContent = newRecipeCategories[i];
+      newlyAddedCategories.appendChild(wrapper);
     }
+
   };
+
+  newlyAddedCategories.addEventListener('click', (event) => {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    const btn = target.closest('.delete-btn');
+    if (!btn) return;
+
+    const category = btn.textContent.trim();
+    if (!category) return;
+
+    newRecipeCategories = newRecipeCategories.filter(c => c !== category)
+
+    showNewlyAddedCategories();
+  })
 
   /*** End new categories functions */
 

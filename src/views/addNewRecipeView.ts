@@ -3,6 +3,7 @@ import { renderAddNewRecipeTemplate } from '@/templates/addNewRecipe.template';
 import type { IRecipe, IIngredient, TUnit } from '@/types/recipe.types';
 import { renderBackButton } from '@/components/backButton';
 import { hideSearchInputInHeader, hideAddNewButtonInHeader } from '@/utils/visibilityHelpers';
+import { handleDeleteRequest } from '@/core/utils/helperFunction';
 
 export function renderAddNewRecipeView() {
   // Hide search input And add new button
@@ -98,13 +99,18 @@ export function renderAddNewRecipeView() {
   let showNewlyAddedCategories = () => {
     newlyAddedCategories.textContent = '';
 
-    for (let category of newRecipeCategories) {
-      const cat = document.createElement('span');
-      cat.textContent = category;
-      cat.classList.add('badge', 'text-bg-success', 'me-2');
-      newlyAddedCategories.appendChild(cat);
+    for (let i = 0; i < newRecipeCategories.length; ++i) {
+      const wrapper = document.createElement('span');
+      wrapper.classList.add('btn', 'btn-success', 'btn-sm', 'delete-btn', 'me-2', 'mb-2');
+      wrapper.textContent = newRecipeCategories[i];
+      wrapper.dataset.index = i.toString();
+      newlyAddedCategories.appendChild(wrapper);
     }
+
   };
+
+  handleDeleteRequest(newlyAddedCategories, newRecipeCategories, showNewlyAddedCategories);
+
 
   /*** End new categories functions */
 
@@ -144,13 +150,17 @@ export function renderAddNewRecipeView() {
   let showNewlyAddedIngredients = () => {
     newlyAddedIngredients.textContent = '';
 
-    for (let ingredient of newRecipeIngredients) {
+    for (let i = 0; i < newRecipeIngredients.length; ++i) {
       const ingr = document.createElement('span');
-      ingr.textContent = `${ingredient.amount}${ingredient.unit} ${ingredient.name}`;
-      ingr.classList.add('badge', 'text-bg-success', 'me-2');
+      ingr.textContent = `${newRecipeIngredients[i].amount}${newRecipeIngredients[i].unit} ${newRecipeIngredients[i].name}`;
+      ingr.classList.add('btn', 'btn-success', 'btn-sm', 'delete-btn', 'me-2', 'mb-2');
+      ingr.dataset.index = i.toString();
       newlyAddedIngredients.appendChild(ingr);
     }
   };
+
+  handleDeleteRequest(newlyAddedIngredients, newRecipeIngredients, showNewlyAddedIngredients);
+
 
   newRecipeInstructionsInput.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter') return;
@@ -176,14 +186,17 @@ export function renderAddNewRecipeView() {
   let showNewlyAddedInstructions = () => {
     newlyAddedInstructions.textContent = '';
 
-    for (let instruction of newRecipeInstructions) {
+    for (let i = 0; i < newRecipeInstructions.length; ++i) {
       const instr = document.createElement('p');
-      instr.textContent = instruction;
+      instr.textContent = newRecipeInstructions[i];
+      instr.classList.add('delete-btn');
+      instr.dataset.index = i.toString();
       newlyAddedInstructions.appendChild(instr);
     }
+
   }
 
-
+  handleDeleteRequest(newlyAddedInstructions, newRecipeInstructions, showNewlyAddedInstructions);
 
 
   /** Helper function that checks if array is empty */

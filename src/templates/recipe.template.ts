@@ -3,8 +3,9 @@ export function renderRecipeViewTemplate(): string {
     <section class="recipe-view ">
       <div class="container mb-3" id="back-button-container" >
       </div>
-      <div class="container mb-4">
+      <div class="container mb-4 position-relative"  ">
         <img id="recipe-image" alt="Rezeptbild" class="img-fluid rounded" style="max-height: 600px; object-fit: cover; width: inherit" />
+        <div class id="favorite-button-container"></div>
       </div>
       <div class="container px-4 border-bottom pb-3 mb-3">
         <h2 id="recipe-title"></h2>

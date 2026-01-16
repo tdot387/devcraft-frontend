@@ -6,7 +6,9 @@ body {
 
 /* Card Hover Effect */
 .card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
 }
 
@@ -57,7 +59,6 @@ h6 {
 
 /* Cooking Animation */
 @keyframes cook {
-
   0%,
   100% {
     transform: rotate(-10deg) scale(1);
@@ -69,7 +70,6 @@ h6 {
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -89,7 +89,6 @@ h6 {
 }
 
 @keyframes dots {
-
   0%,
   20% {
     content: '';
@@ -108,7 +107,6 @@ h6 {
     content: '...';
   }
 }
-
 
 /* Header Search */
 .search-container {

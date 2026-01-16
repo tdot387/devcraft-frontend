@@ -1,3 +1,4 @@
+import type { IIngredient } from '@/types/recipe.types';
 import { router } from '../router';
 
 // helper function to set up event listeners for link clicks
@@ -22,3 +23,16 @@ export const setupEventListeners = () => {
   document.addEventListener('click', handleLinkClick);
   window.addEventListener('popstate', handleBrowserNavigation);
 };
+
+export const handleDeleteRequest = (eventToBeFired: HTMLElement, arrayToBeSpliced: string[] | IIngredient[], elementToBeShown: () => void) => {
+  eventToBeFired.addEventListener('click', (event: MouseEvent) => {
+    const target = event.target as HTMLElement | null;
+    const btn = target?.closest('.delete-btn') as HTMLElement | null;
+    const index = Number(btn?.dataset?.index);
+
+    if (!Number.isNaN(index)) {
+      arrayToBeSpliced.splice(index, 1);
+      elementToBeShown();
+    }
+  })
+}

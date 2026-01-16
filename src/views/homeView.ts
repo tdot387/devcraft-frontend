@@ -1,5 +1,5 @@
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
-import { getRecipes, updateRecipeFavorite } from '@/services/recipes.service';
+import { getRecipes } from '@/services/recipes.service';
 import { renderHomeViewTemplate } from '@/templates/home.template';
 import { getCategories } from '@/utils';
 import {
@@ -9,7 +9,7 @@ import {
   getRecipeHTMLForCategory,
   renderSimpleRecipeCards,
 } from '@/utils/homeViewHelpers';
-import { updateFavoriteButtonUI } from '@/utils/favoriteHelpers';
+import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 
 export async function renderHomeView() {
   const app = document.querySelector('#app')!;
@@ -41,43 +41,15 @@ export async function renderHomeView() {
     });
   }
 
-  function attachFavoriteToggleListeners(container: Element) {
-    container.querySelectorAll('.favorite-toggle').forEach((button) => {
-      button.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        await handleFavoriteToggle(button as HTMLButtonElement);
-      });
-    });
-  }
-
-  async function handleFavoriteToggle(btn: HTMLButtonElement) {
-    const recipeId = btn.dataset.recipeId!;
-    const currentState = btn.dataset.favorite === 'true';
-    const newState = !currentState;
-    const icon = btn.querySelector('i')!;
-
-    updateFavoriteButtonUI(btn, icon, newState);
-    await updateRecipeFavorite(recipeId, newState); // firebase post
-    updateLocalRecipeState(recipeId, newState);
-    updateCategoryButtonsWithBadge();
-    reRenderFavoritesIfActive();
-  }
-
-  function updateLocalRecipeState(recipeId: string, isFavorite: boolean) {
-    const recipe = recipes.find((recipe) => recipe.id === recipeId);
-    if (recipe) recipe.favorite = isFavorite;
-  }
-
-  function reRenderFavoritesIfActive() {
-    if (currentCategory === 'Meine Favoriten') {
-      renderRecipesByCategory('Meine Favoriten');
-    }
-  }
-
   function renderRecipesByCategory(category: string) {
     const html = getRecipeHTMLForCategory(recipes, category);
     recipeList.innerHTML = html;
-    attachFavoriteToggleListeners(recipeList);
+    attachFavoriteListeners(recipeList, recipes, () => {
+      updateCategoryButtonsWithBadge();
+      if (currentCategory === 'Meine Favoriten') {
+        renderRecipesByCategory('Meine Favoriten');
+      }
+    });
   }
 
   function handleCategoryClick(e: Event) {
@@ -96,7 +68,7 @@ export async function renderHomeView() {
       rec.name.toLowerCase().includes(searchValue.toLowerCase()),
     );
     recipeList.innerHTML = renderSimpleRecipeCards(filtered);
-    attachFavoriteToggleListeners(recipeList);
+    attachFavoriteListeners(recipeList, recipes, updateCategoryButtonsWithBadge);
   }
 
   homeCategories.addEventListener('click', handleCategoryClick);

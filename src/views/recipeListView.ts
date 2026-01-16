@@ -25,16 +25,13 @@ export async function renderRecipeListView() {
   }
 
   const recipeCards = mapToRecipeCards(recipes);
-
   recipeListContainer.innerHTML = recipeCards;
-
-  attachFavoriteListeners(recipeListContainer);
+  attachFavoriteListeners(recipeListContainer, recipes);
   
-  // search recipies
   window.addEventListener('executeSearch', (searchEvent) => {
     const searchValue = (searchEvent as CustomEvent).detail.searchText;
     recipeListContainer.innerHTML = mapToRecipeCards(recipes, searchValue);
-    attachFavoriteListeners(recipeListContainer);
+    attachFavoriteListeners(recipeListContainer, recipes);
   });
 }
 

@@ -38,7 +38,7 @@ export async function renderRecipeView() {
 
   const favoriteContainer = document.querySelector('#favorite-button-container')!;
   favoriteContainer.innerHTML = renderFavoriteToggle(recipe.favorite, recipe.id!);
-  attachFavoriteListeners(favoriteContainer);
+  attachFavoriteListeners(favoriteContainer, [recipe]);
 
   const elements = {
     image: document.getElementById('recipe-image')! as HTMLImageElement,

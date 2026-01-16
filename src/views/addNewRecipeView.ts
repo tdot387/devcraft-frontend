@@ -3,6 +3,7 @@ import { renderAddNewRecipeTemplate } from '@/templates/addNewRecipe.template';
 import type { IRecipe, IIngredient, TUnit } from '@/types/recipe.types';
 import { renderBackButton } from '@/components/backButton';
 import { hideSearchInputInHeader, hideAddNewButtonInHeader } from '@/utils/visibilityHelpers';
+import { handleDeleteRequest } from '@/core/utils/helperFunction';
 
 export function renderAddNewRecipeView() {
   // Hide search input And add new button
@@ -108,24 +109,8 @@ export function renderAddNewRecipeView() {
 
   };
 
-  newlyAddedCategories.addEventListener('click', (event) => {
-    const target = event.target;
+  handleDeleteRequest(newlyAddedCategories, newRecipeCategories, showNewlyAddedCategories);
 
-    if (!(target instanceof HTMLElement)) return;
-
-    const btn = target.closest('.delete-btn') as HTMLElement | null;
-    if (!btn) return;
-
-    const index = Number(btn.dataset.index);
-    if (Number.isNaN(index)) return;
-
-    const category = btn.textContent.trim();
-    if (!category) return;
-
-    newRecipeCategories.splice(index, 1);
-
-    showNewlyAddedCategories();
-  })
 
   /*** End new categories functions */
 
@@ -174,20 +159,7 @@ export function renderAddNewRecipeView() {
     }
   };
 
-  newlyAddedIngredients.addEventListener('click', (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
-
-    const btn = target.closest('.delete-btn') as HTMLElement | null;
-    if (!btn) return;
-
-    const index = Number(btn.dataset.index);
-    if (Number.isNaN(index)) return;
-
-    newRecipeIngredients.splice(index, 1);
-    showNewlyAddedIngredients();
-
-  })
+  handleDeleteRequest(newlyAddedIngredients, newRecipeIngredients, showNewlyAddedIngredients);
 
 
   newRecipeInstructionsInput.addEventListener('keydown', (event) => {
@@ -224,21 +196,7 @@ export function renderAddNewRecipeView() {
 
   }
 
-  newlyAddedInstructions.addEventListener('click', (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
-
-    const btn = target.closest('.delete-btn') as HTMLElement | null;
-    if (!btn) return;
-
-    const index = Number(btn.dataset.index);
-    if (Number.isNaN(index)) return;
-
-    newRecipeInstructions.splice(index, 1);
-    showNewlyAddedInstructions();
-  })
-
-
+  handleDeleteRequest(newlyAddedInstructions, newRecipeInstructions, showNewlyAddedInstructions);
 
 
   /** Helper function that checks if array is empty */

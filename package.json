@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.11.3",
     "firebase": "^12.7.0"
   }
 }

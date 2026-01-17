@@ -5,6 +5,8 @@ import type { IIngredient } from '@/types/recipe.types';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { renderBackButton } from '@/components/backButton';
 import { hideAddNewButtonInHeader, hideSearchInputInHeader } from '@/utils/visibilityHelpers';
+import { renderFavoriteToggle } from '@/components/favoriteToggle';
+import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 
 export async function renderRecipeView() {
   // Hide search input And add new button
@@ -33,6 +35,10 @@ export async function renderRecipeView() {
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
+
+  const favoriteContainer = document.querySelector('#favorite-button-container')!;
+  favoriteContainer.innerHTML = renderFavoriteToggle(recipe.favorite, recipe.id!);
+  attachFavoriteListeners(favoriteContainer, [recipe]);
 
   const elements = {
     image: document.getElementById('recipe-image')! as HTMLImageElement,

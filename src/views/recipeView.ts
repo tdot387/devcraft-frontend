@@ -4,7 +4,10 @@ import { getRecipeById } from '@/services/recipeById.service';
 import type { IIngredient } from '@/types/recipe.types';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { renderBackButton } from '@/components/backButton';
-import { hideAddNewButtonInHeader, hideSearchInputInHeader } from '@/utils/visibilityHelpers';
+import {
+  hideAddNewButtonInHeader,
+  hideSearchInputInHeader,
+} from '@/utils/visibilityHelpers';
 
 export async function renderRecipeView() {
   // Hide search input And add new button
@@ -34,6 +37,11 @@ export async function renderRecipeView() {
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
 
+  // Navigate to edit view on button click
+  document.getElementById('edit-recipe-btn')!.addEventListener('click', () => {
+    (window as any).router.nav(`/recipe/edit?id=${recipe.id}`);
+  });
+
   const elements = {
     image: document.getElementById('recipe-image')! as HTMLImageElement,
     title: document.getElementById('recipe-title')!,
@@ -43,7 +51,7 @@ export async function renderRecipeView() {
     ingredientsList: document.getElementById('ingredients-list')!,
     preparationTitle: document.getElementById('preparation-title')!,
     preparationSteps: document.getElementById('preparation-steps')!,
-    servings: document.getElementById('servings')! as HTMLSelectElement
+    servings: document.getElementById('servings')! as HTMLSelectElement,
   };
 
   const baseIngredients = recipe.ingredients ?? [];
@@ -77,21 +85,22 @@ export async function renderRecipeView() {
   function renderIngredients(servings: number) {
     elements.ingredientsList.innerHTML =
       baseIngredients
-        ?.map(
-          (ing: IIngredient) => {
-            const amount = Number(ing.amount) * servings;
-            const amountText = Number.isFinite(amount) ? formatIngredientsAmount(amount) : '';
+        ?.map((ing: IIngredient) => {
+          const amount = Number(ing.amount) * servings;
+          const amountText = Number.isFinite(amount)
+            ? formatIngredientsAmount(amount)
+            : '';
 
-            return `<li class="d-flex align-items-center mb-2"><span class="me-2 text-success">✓</span>${amountText}${ing.unit || ''} ${ing.name}</li>`;
-          })
+          return `<li class="d-flex align-items-center mb-2"><span class="me-2 text-success">✓</span>${amountText}${ing.unit || ''} ${ing.name}</li>`;
+        })
         .join('') || '';
   }
 
   renderIngredients(Number(elements.servings.value));
 
   elements.servings.addEventListener('change', () => {
-    renderIngredients(Number(elements.servings.value))
-  })
+    renderIngredients(Number(elements.servings.value));
+  });
 
   document.getElementById('preparation-title')!.innerHTML =
     '<span class="text-success">👩‍🍳</span> Zubereitung';
@@ -103,4 +112,3 @@ export async function renderRecipeView() {
       )
       .join('') || '';
 }
-

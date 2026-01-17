@@ -3,12 +3,14 @@ import { renderRecipeCard } from '@/components/recipeCard';
 import { getRecipes } from '@/services/recipes.service';
 import { renderBackButton } from '@/components/backButton';
 import type { IRecipe } from '@/types/recipe.types';
+import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 
 export async function renderRecipeListView() {
   const app = document.querySelector('#app')!;
   app.innerHTML = renderRecipeListTemplate();
 
-  document.querySelector('#back-button-container')!.innerHTML = renderBackButton();
+  document.querySelector('#back-button-container')!.innerHTML =
+    renderBackButton();
 
   const recipeListContainer = document.querySelector('#recipe-list')!;
   recipeListContainer.innerHTML =
@@ -23,20 +25,27 @@ export async function renderRecipeListView() {
   }
 
   const recipeCards = mapToRecipeCards(recipes);
-
   recipeListContainer.innerHTML = recipeCards;
-  // search recipies
-  window.addEventListener("executeSearch", (searchEvent) => {
+  attachFavoriteListeners(recipeListContainer, recipes);
+  
+  window.addEventListener('executeSearch', (searchEvent) => {
     const searchValue = (searchEvent as CustomEvent).detail.searchText;
     recipeListContainer.innerHTML = mapToRecipeCards(recipes, searchValue);
-  })
+    attachFavoriteListeners(recipeListContainer, recipes);
+  });
 }
 
 function mapToRecipeCards(recipes: IRecipe[], searchText?: string) {
-  return (searchText ? recipes.filter(e => e.name.toLowerCase().includes(searchText.toLowerCase())) : recipes)
-    .map((recipe) => {
-      return renderRecipeCard(recipe);
-    })
-    .join('') || '';
+  return (
+    (searchText
+      ? recipes.filter((e) =>
+          e.name.toLowerCase().includes(searchText.toLowerCase()),
+        )
+      : recipes
+    )
+      .map((recipe) => {
+        return renderRecipeCard(recipe);
+      })
+      .join('') || ''
+  );
 }
-

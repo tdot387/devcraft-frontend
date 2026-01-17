@@ -1,4 +1,11 @@
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc
+} from 'firebase/firestore';
 import { db } from '@/services/firebase/firebaseApp';
 import type { IRecipe } from '@/types/recipe.types';
 
@@ -26,6 +33,15 @@ export async function createRecipe(recipe: IRecipe) {
   } catch (e) {
     console.error('Error adding document: ', e);
   }
+}
+
+// change favorite status of a recipe in firebase as post request
+export async function updateRecipeFavorite(
+  recipeId: string,
+  isFavorite: boolean,
+): Promise<void> {
+  const recipeRef = doc(db, 'recipes', recipeId);
+  await updateDoc(recipeRef, { favorite: isFavorite });
 }
 
 

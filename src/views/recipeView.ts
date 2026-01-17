@@ -8,6 +8,7 @@ import { hideAddNewButtonInHeader, hideSearchInputInHeader } from '@/utils/visib
 import { renderFavoriteToggle } from '@/components/favoriteToggle';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 import { deleteRecipe } from '@/services/recipes.service';
+import { renderDeleteModal } from '@/components/modal';
 
 export async function renderRecipeView() {
   // Hide search input And add new button
@@ -33,6 +34,7 @@ export async function renderRecipeView() {
   }
 
   app.innerHTML = renderRecipeViewTemplate();
+  app.innerHTML += renderDeleteModal();
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
@@ -112,7 +114,8 @@ export async function renderRecipeView() {
 
   const deleteRecipeBtn = document.getElementById('delete-recipe') as HTMLElement;
   deleteRecipeBtn.addEventListener('click', () => {
-    // deleteRecipe(recipe.id);
+    deleteRecipe(recipe.id);
+    console.log(`Success: Reciped with id ${recipe.id} deleted`);
   })
 }
 

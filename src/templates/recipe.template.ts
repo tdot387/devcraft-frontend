@@ -7,7 +7,13 @@ export function renderRecipeViewTemplate(): string {
         <img id="recipe-image" alt="Rezeptbild" class="img-fluid rounded" style="max-height: 600px; object-fit: cover; width: inherit" />
       </div>
       <div class="container px-4 border-bottom pb-3 mb-3">
+        <div class="d-flex justify-content-between align-items-center">
         <h2 id="recipe-title"></h2>
+        <span id="delete-recipe" style="margin-bottom: 0.5rem; color: red; cursor: pointer">delete recipe</span>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+        </button>
+        </div>
         <div class="d-flex gap-2 align-items-center">
           <p id="preparation-time" class="mb-0 d-flex align-items-center gap-1"></p>
           <p class="border-end pe-2 mb-0" style="height: 20px;"></p>

@@ -5,6 +5,7 @@ import type { IIngredient } from '@/types/recipe.types';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { renderBackButton } from '@/components/backButton';
 import { hideAddNewButtonInHeader, hideSearchInputInHeader } from '@/utils/visibilityHelpers';
+import { deleteRecipe } from '@/services/recipes.service';
 
 export async function renderRecipeView() {
   // Hide search input And add new button
@@ -102,5 +103,10 @@ export async function renderRecipeView() {
           `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
       )
       .join('') || '';
+
+  const deleteRecipeBtn = document.getElementById('delete-recipe') as HTMLElement;
+  deleteRecipeBtn.addEventListener('click', () => {
+    // deleteRecipe(recipe.id);
+  })
 }
 

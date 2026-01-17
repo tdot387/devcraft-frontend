@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/services/firebase/firebaseApp';
 import type { IRecipe } from '@/types/recipe.types';
 
@@ -25,5 +25,14 @@ export async function createRecipe(recipe: IRecipe) {
     console.log('Success!', docRef.id);
   } catch (e) {
     console.error('Error adding document: ', e);
+  }
+}
+
+
+export async function deleteRecipe(id: string) {
+  try {
+    await deleteDoc(doc(db, "recipes", id));
+  } catch(error) {
+    console.log('Error deleting file: ', error);
   }
 }

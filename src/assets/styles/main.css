@@ -148,3 +148,10 @@ h6 {
   background-color: rgb(198, 5, 5);
   border-radius: 4px;
 }
+
+.input-error {
+  font-size: .7rem;
+  color:rgb(198, 5, 5);
+  visibility: hidden;
+
+}

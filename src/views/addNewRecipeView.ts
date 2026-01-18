@@ -234,6 +234,9 @@ export function renderAddNewRecipeView() {
     newRecipeForm.reset();
     newRecipeIngredients = [];
     newRecipeCategories = [];
+    newRecipeInstructions = [];
     newlyAddedCategories.textContent = '';
+    newlyAddedIngredients.textContent = '';
+    newlyAddedInstructions.textContent = '';
   });
 }

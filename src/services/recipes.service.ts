@@ -4,6 +4,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc
 } from 'firebase/firestore';
 import { db } from '@/services/firebase/firebaseApp';
 import type { IRecipe } from '@/types/recipe.types';
@@ -41,4 +42,13 @@ export async function updateRecipeFavorite(
 ): Promise<void> {
   const recipeRef = doc(db, 'recipes', recipeId);
   await updateDoc(recipeRef, { favorite: isFavorite });
+}
+
+
+export async function deleteRecipe(id: string) {
+  try {
+    await deleteDoc(doc(db, "recipes", id));
+  } catch(error) {
+    console.log('Error deleting file: ', error);
+  }
 }

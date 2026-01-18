@@ -8,7 +8,10 @@ export function renderRecipeViewTemplate(): string {
         <div class id="favorite-button-container"></div>
       </div>
       <div class="container px-4 border-bottom pb-3 mb-3">
+        <div class="d-flex justify-content-between align-items-center">
         <h2 id="recipe-title"></h2>
+        <h2><i class="bi bi-trash" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#deleteRecipeModal"></i></h2>
+        </div>
         <div class="d-flex gap-2 align-items-center">
           <p id="preparation-time" class="mb-0 d-flex align-items-center gap-1"></p>
           <p class="border-end pe-2 mb-0" style="height: 20px;"></p>

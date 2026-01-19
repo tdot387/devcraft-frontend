@@ -46,6 +46,15 @@ body {
   z-index: 1000;
 }
 
+.footer-link {
+  color: var(--bs-secondary-color);
+}
+
+.footer-link:hover,
+.footer-link:focus {
+  color: var(--bs-success) !important;
+}
+
 /* Ensure Bootstrap typography works */
 h1,
 h2,

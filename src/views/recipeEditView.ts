@@ -1,13 +1,14 @@
 import { renderRecipeEditTemplate } from '@/templates/recipeEdit.template';
 import { getQueryParam } from '@/core/utils/urlUtils';
 import { getRecipeById } from '@/services/recipeById.service';
+import { updateRecipe } from '@/services/recipes.service';
 import { renderBackButton } from '@/components/backButton';
 import {
   hideAddNewButtonInHeader,
   hideSearchInputInHeader,
 } from '@/utils/visibilityHelpers';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
-import type { IIngredient, IRecipe } from '@/types/recipe.types';
+import type { IIngredient, IRecipe, TUnit } from '@/types/recipe.types';
 
 export async function renderRecipeEditView() {
   hideSearchInputInHeader();
@@ -73,11 +74,11 @@ export async function renderRecipeEditView() {
   elements.ingredientsContainer.innerHTML = '';
   recipe.ingredients.forEach((ingredient: IIngredient) => {
     const ingredientDiv = document.createElement('div');
-    ingredientDiv.className = 'd-flex gap-2 mb-2';
+    ingredientDiv.className = 'ingredient-row d-flex gap-2 mb-2';
     ingredientDiv.innerHTML = `
-      <input type="text" class="form-control" placeholder="Menge" value="${ingredient.amount}">
-      <input type="text" class="form-control" placeholder="Einheit" value="${ingredient.unit}">
-      <input type="text" class="form-control" placeholder="Zutat" value="${ingredient.name}">
+      <input type="text" class="form-control ingredient-amount" placeholder="Menge" value="${ingredient.amount}">
+      <input type="text" class="form-control ingredient-unit" placeholder="Einheit" value="${ingredient.unit}">
+      <input type="text" class="form-control ingredient-name" placeholder="Zutat" value="${ingredient.name}">
       <button type="button" class="btn btn-sm btn-outline-danger remove-ingredient-btn">-</button>
     `;
     elements.ingredientsContainer.appendChild(ingredientDiv);
@@ -95,9 +96,9 @@ export async function renderRecipeEditView() {
   recipe.instructions.forEach(
     (instruction: Pick<IRecipe, 'instructions'>, index: number) => {
       const instructionDiv = document.createElement('div');
-      instructionDiv.className = 'd-flex gap-2 mb-2';
+      instructionDiv.className = 'instruction-row d-flex gap-2 mb-2';
       instructionDiv.innerHTML = `
-      <textarea class="form-control" placeholder="Schritt ${index + 1}">${instruction}</textarea>
+      <textarea class="form-control instruction-text" placeholder="Schritt ${index + 1}">${instruction}</textarea>
       <button type="button" class="btn btn-sm btn-outline-danger remove-instruction-btn">-</button>
     `;
       elements.instructionsContainer.appendChild(instructionDiv);
@@ -114,11 +115,11 @@ export async function renderRecipeEditView() {
   // add new ingredient event
   elements.addIngredientBtn.addEventListener('click', () => {
     const ingredientDiv = document.createElement('div');
-    ingredientDiv.className = 'd-flex gap-2 mb-2';
+    ingredientDiv.className = 'ingredient-row d-flex gap-2 mb-2';
     ingredientDiv.innerHTML = `
-      <input type="text" class="form-control" placeholder="Menge">
-      <input type="text" class="form-control" placeholder="Einheit">
-      <input type="text" class="form-control" placeholder="Zutat">
+      <input type="text" class="form-control ingredient-amount" placeholder="Menge">
+      <input type="text" class="form-control ingredient-unit" placeholder="Einheit">
+      <input type="text" class="form-control ingredient-name" placeholder="Zutat">
       <button type="button" class="btn btn-sm btn-outline-danger remove-ingredient-btn">-</button>
     `;
     elements.ingredientsContainer.appendChild(ingredientDiv);
@@ -134,9 +135,9 @@ export async function renderRecipeEditView() {
   // add new instruction event
   elements.addInstructionBtn.addEventListener('click', () => {
     const instructionDiv = document.createElement('div');
-    instructionDiv.className = 'd-flex gap-2 mb-2';
+    instructionDiv.className = 'instruction-row d-flex gap-2 mb-2';
     instructionDiv.innerHTML = `
-      <textarea class="form-control" placeholder="Neuer Schritt"></textarea>
+      <textarea class="form-control instruction-text" placeholder="Neuer Schritt"></textarea>
       <button type="button" class="btn btn-sm btn-outline-danger remove-instruction-btn">-</button>
     `;
     elements.instructionsContainer.appendChild(instructionDiv);
@@ -150,9 +151,49 @@ export async function renderRecipeEditView() {
   });
 
   // form submit event
-  elements.recipeEditForm.addEventListener('submit', (e) => {
+  elements.recipeEditForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    // collect data and send to backend (not implemented)
-    console.log('Form submitted');
+
+    // collect ingredients
+    const ingredientRows = elements.ingredientsContainer.querySelectorAll('.ingredient-row');
+    const ingredients: IIngredient[] = [];
+    ingredientRows.forEach((row) => {
+      const amount = (row.querySelector('.ingredient-amount') as HTMLInputElement).value;
+      const unit = (row.querySelector('.ingredient-unit') as HTMLInputElement).value as TUnit;
+      const name = (row.querySelector('.ingredient-name') as HTMLInputElement).value;
+      ingredients.push({ amount, unit, name });
+    });
+
+    // collect instructions
+    const instructionRows = elements.instructionsContainer.querySelectorAll('.instruction-row');
+    const instructions: string[] = [];
+    instructionRows.forEach((row) => {
+      const text = (row.querySelector('.instruction-text') as HTMLTextAreaElement).value;
+      instructions.push(text);
+    });
+
+    // collect categories
+    const categories = elements.recipeCategories.value
+      .split(',')
+      .map((cat) => cat.trim())
+      .filter((cat) => cat.length > 0);
+
+    const updatedRecipe: Partial<IRecipe> = {
+      name: elements.recipeName.value,
+      imageUrl: elements.recipeImageUrl.value,
+      prepTime: elements.recipePrepTime.value,
+      description: elements.description.value,
+      categories,
+      ingredients,
+      instructions,
+    };
+
+    try {
+      await updateRecipe(recipeId, updatedRecipe);
+      window.location.href = `/recipe?id=${recipeId}`;
+    } catch (error) {
+      console.error('Error updating recipe:', error);
+      alert('Fehler beim Speichern des Rezepts');
+    }
   });
 }

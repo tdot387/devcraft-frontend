@@ -14,6 +14,7 @@ import { deleteRecipe } from '@/services/recipes.service';
 import { renderDeleteModal } from '@/components/modal';
 import * as bootstrap from 'bootstrap';
 import { router } from '@/core/router';
+import { renderToastTemplate } from '@/templates/toast.template';
 
 export async function renderRecipeView() {
   // Hide search input And add new button
@@ -40,6 +41,8 @@ export async function renderRecipeView() {
 
   app.innerHTML = renderRecipeViewTemplate();
   app.innerHTML += renderDeleteModal();
+  app.innerHTML += renderToastTemplate('Rezept erfolgreich gelöscht.');
+  const successToast = new bootstrap.Toast('.toast');
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
@@ -141,9 +144,12 @@ export async function renderRecipeView() {
     modalEl.addEventListener(
       'hidden.bs.modal',
       () => {
-        router.nav('/');
-        document.body.classList.remove('modal-open');
-        document.querySelectorAll('.modal-backdrop').forEach((b) => b.remove());
+        successToast.show();
+        setTimeout(() => {
+          router.nav('/');
+          document.body.classList.remove('modal-open');
+          document.querySelectorAll('.modal-backdrop').forEach((b) => b.remove());
+        }, 3000);
       },
       { once: true },
     );

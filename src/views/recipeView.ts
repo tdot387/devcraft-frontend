@@ -6,6 +6,11 @@ import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { renderBackButton } from '@/components/backButton';
 import { renderFavoriteToggle } from '@/components/favoriteToggle';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
+import { deleteRecipe } from '@/services/recipes.service';
+import { renderDeleteModal } from '@/components/modal';
+import * as bootstrap from 'bootstrap';
+import { router } from '@/core/router';
+import { renderToastTemplate } from '@/templates/toast.template';
 
 export async function renderRecipeView() {
   const app = document.querySelector('#app')!;
@@ -27,9 +32,17 @@ export async function renderRecipeView() {
   }
 
   app.innerHTML = renderRecipeViewTemplate();
+  app.innerHTML += renderDeleteModal();
+  app.innerHTML += renderToastTemplate('Rezept erfolgreich gelöscht.');
+  const successToast = new bootstrap.Toast('.toast');
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
+
+  // Navigate to edit view on button click
+  document.getElementById('edit-recipe-btn')!.addEventListener('click', () => {
+    (window as any).router.nav(`/recipe/edit?id=${recipe.id}`);
+  });
 
   const favoriteContainer = document.querySelector(
     '#favorite-button-container',
@@ -109,4 +122,32 @@ export async function renderRecipeView() {
           `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
       )
       .join('') || '';
+
+  const deleteRecipeBtn = document.getElementById(
+    'delete-recipe',
+  ) as HTMLElement;
+  deleteRecipeBtn.addEventListener('click', () => {
+    deleteRecipe(recipe.id);
+    console.log(`Success: Reciped with id ${recipe.id} deleted`);
+
+    const modalEl = document.getElementById('deleteRecipeModal') as HTMLElement;
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    modalEl.addEventListener(
+      'hidden.bs.modal',
+      () => {
+        successToast.show();
+        setTimeout(() => {
+          router.nav('/');
+          document.body.classList.remove('modal-open');
+          document
+            .querySelectorAll('.modal-backdrop')
+            .forEach((b) => b.remove());
+        }, 3000);
+      },
+      { once: true },
+    );
+
+    modal.hide();
+  });
 }

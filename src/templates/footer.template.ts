@@ -1,15 +1,27 @@
 export function renderFooterTemplate(): string {
   return `
-    <footer class="hr py-4 border-top">
-      <div class="container   divider-top">
-        <div class="row">
-          <div class="col-md-6">
-            <h5>Rezept App</h5>
-            <p class="mb-3">Entdecke leckere Rezepte für jeden Anlass.</p>
+    <footer class="bg-secondary-subtle py-4 border-top">
+      <div class="container divider-top">
+        <div class="row gy-4">
+          <div class="col-12 col-md-6">
+            <h4 class="mb-2 text-success">Rezept App</h4>
+            <p class="mb-2">Entdecke leckere Rezepte für jeden Anlass.</p>
+
+            <small class="text-muted d-block">
+              &copy; 2026 DevCraft Academy · Alle Rechte vorbehalten
+            </small>
           </div>
-          <div class="col-md-6 text-md-end">
-            <p class="mb-1">&copy; 2026 DevCraft Academy</p>
-            <small class="text-muted">Alle Rechte vorbehalten</small>
+
+          <div class="col-12 col-md-6">
+            <h4 class="mb-2 text-success">Navigation</h4>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-1">
+                <a class="footer-link text-decoration-none" href="/recipes">Alle Rezepte</a>
+              </li>
+              <li>
+                <a class="footer-link text-decoration-none" href="/add-new-recipe">Rezept hinzufügen</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

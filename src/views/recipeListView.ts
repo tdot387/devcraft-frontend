@@ -27,7 +27,7 @@ export async function renderRecipeListView() {
   const recipeCards = mapToRecipeCards(recipes);
   recipeListContainer.innerHTML = recipeCards;
   attachFavoriteListeners(recipeListContainer, recipes);
-  
+
   window.addEventListener('executeSearch', (searchEvent) => {
     const searchValue = (searchEvent as CustomEvent).detail.searchText;
     recipeListContainer.innerHTML = mapToRecipeCards(recipes, searchValue);

@@ -2,14 +2,9 @@ import { createRecipe } from '@/services/recipes.service';
 import { renderAddNewRecipeTemplate } from '@/templates/addNewRecipe.template';
 import type { IRecipe, IIngredient, TUnit } from '@/types/recipe.types';
 import { renderBackButton } from '@/components/backButton';
-import { hideSearchInputInHeader, hideAddNewButtonInHeader } from '@/utils/visibilityHelpers';
 import { handleDeleteRequest } from '@/core/utils/helperFunction';
 
 export function renderAddNewRecipeView() {
-  // Hide search input And add new button
-  hideSearchInputInHeader();
-  hideAddNewButtonInHeader();
-
   const app = document.querySelector('#app')!;
   app.innerHTML = renderAddNewRecipeTemplate();
 
@@ -56,13 +51,13 @@ export function renderAddNewRecipeView() {
     'new-recipe-instructions',
   ) as HTMLInputElement;
   const addInstructionsBtn = document.getElementById(
-    'add-new-instruction-btn'
+    'add-new-instruction-btn',
   ) as HTMLButtonElement;
   const newRecipePrepTimeInput = document.getElementById(
     'new-recipe-prep-time',
   ) as HTMLInputElement;
   const newlyAddedInstructions = document.getElementById(
-    'newly-added-instruction'
+    'newly-added-instruction',
   ) as HTMLElement;
 
   let newRecipeCategories: string[] = [];
@@ -101,16 +96,25 @@ export function renderAddNewRecipeView() {
 
     for (let i = 0; i < newRecipeCategories.length; ++i) {
       const wrapper = document.createElement('span');
-      wrapper.classList.add('btn', 'btn-success', 'btn-sm', 'delete-btn', 'me-2', 'mb-2');
+      wrapper.classList.add(
+        'btn',
+        'btn-success',
+        'btn-sm',
+        'delete-btn',
+        'me-2',
+        'mb-2',
+      );
       wrapper.textContent = newRecipeCategories[i];
       wrapper.dataset.index = i.toString();
       newlyAddedCategories.appendChild(wrapper);
     }
-
   };
 
-  handleDeleteRequest(newlyAddedCategories, newRecipeCategories, showNewlyAddedCategories);
-
+  handleDeleteRequest(
+    newlyAddedCategories,
+    newRecipeCategories,
+    showNewlyAddedCategories,
+  );
 
   /*** End new categories functions */
 
@@ -126,7 +130,6 @@ export function renderAddNewRecipeView() {
 
     addIngredientToArray();
   });
-
 
   let addIngredientToArray = () => {
     const nameValue = newRecipeIngredientsInputName.value.trim();
@@ -153,21 +156,31 @@ export function renderAddNewRecipeView() {
     for (let i = 0; i < newRecipeIngredients.length; ++i) {
       const ingr = document.createElement('span');
       ingr.textContent = `${newRecipeIngredients[i].amount}${newRecipeIngredients[i].unit} ${newRecipeIngredients[i].name}`;
-      ingr.classList.add('btn', 'btn-success', 'btn-sm', 'delete-btn', 'me-2', 'mb-2');
+      ingr.classList.add(
+        'btn',
+        'btn-success',
+        'btn-sm',
+        'delete-btn',
+        'me-2',
+        'mb-2',
+      );
       ingr.dataset.index = i.toString();
       newlyAddedIngredients.appendChild(ingr);
     }
   };
 
-  handleDeleteRequest(newlyAddedIngredients, newRecipeIngredients, showNewlyAddedIngredients);
-
+  handleDeleteRequest(
+    newlyAddedIngredients,
+    newRecipeIngredients,
+    showNewlyAddedIngredients,
+  );
 
   newRecipeInstructionsInput.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter') return;
     event.preventDefault();
 
     addInstructionToArray();
-  })
+  });
 
   let addInstructionToArray = () => {
     const value = newRecipeInstructionsInput.value.trim();
@@ -177,11 +190,11 @@ export function renderAddNewRecipeView() {
     newRecipeInstructionsInput.value = '';
 
     showNewlyAddedInstructions();
-  }
+  };
 
   addInstructionsBtn.addEventListener('click', () => {
     addInstructionToArray();
-  })
+  });
 
   let showNewlyAddedInstructions = () => {
     newlyAddedInstructions.textContent = '';
@@ -193,28 +206,32 @@ export function renderAddNewRecipeView() {
       instr.dataset.index = i.toString();
       newlyAddedInstructions.appendChild(instr);
     }
+  };
 
-  }
-
-  handleDeleteRequest(newlyAddedInstructions, newRecipeInstructions, showNewlyAddedInstructions);
-
+  handleDeleteRequest(
+    newlyAddedInstructions,
+    newRecipeInstructions,
+    showNewlyAddedInstructions,
+  );
 
   /** Helper function that checks if array is empty */
-  const isEmptyArray = (arr: string[] | IIngredient[]) => !Array.isArray(arr) || arr.length === 0;
+  const isEmptyArray = (arr: string[] | IIngredient[]) =>
+    !Array.isArray(arr) || arr.length === 0;
 
   newRecipeForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    if (newRecipeNameInput.value.trim() == ''
-      || newRecipeDescriptionInput.value.trim() == ''
-      || newRecipeImgUrl.value.trim() == ''
-      || newRecipePrepTimeInput.value.trim() == ''
-      || isEmptyArray(newRecipeCategories)
-      || isEmptyArray(newRecipeIngredients)
-      || isEmptyArray(newRecipeInstructions)
+    if (
+      newRecipeNameInput.value.trim() == '' ||
+      newRecipeDescriptionInput.value.trim() == '' ||
+      newRecipeImgUrl.value.trim() == '' ||
+      newRecipePrepTimeInput.value.trim() == '' ||
+      isEmptyArray(newRecipeCategories) ||
+      isEmptyArray(newRecipeIngredients) ||
+      isEmptyArray(newRecipeInstructions)
     ) {
-      console.log('Cant add stuff due to empty fields')
-      return
+      console.log('Cant add stuff due to empty fields');
+      return;
     }
 
     const newRecipe: IRecipe = {
@@ -225,7 +242,7 @@ export function renderAddNewRecipeView() {
       imageUrl: newRecipeImgUrl.value,
       ingredients: [...newRecipeIngredients],
       instructions: [...newRecipeInstructions],
-      prepTime: newRecipePrepTimeInput.value + ' Min'
+      prepTime: newRecipePrepTimeInput.value + ' Min',
     };
 
     createRecipe(newRecipe);

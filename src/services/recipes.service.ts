@@ -17,7 +17,7 @@ export async function getRecipes(): Promise<IRecipe[]> {
         ...(doc.data() as Omit<IRecipe, 'id'>),
       };
     });
-
+    broadcastRecipes(recipes);
     return recipes;
   } catch (error) {
     console.error('Error fetching recipes:', error);
@@ -41,4 +41,10 @@ export async function updateRecipeFavorite(
 ): Promise<void> {
   const recipeRef = doc(db, 'recipes', recipeId);
   await updateDoc(recipeRef, { favorite: isFavorite });
+}
+
+function broadcastRecipes(recipes: IRecipe[]): void {
+  window.dispatchEvent(
+    new CustomEvent('recipesFetched', { detail: { recipes } }),
+  );
 }

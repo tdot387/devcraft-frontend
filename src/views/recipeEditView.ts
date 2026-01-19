@@ -9,6 +9,9 @@ import {
 } from '@/utils/visibilityHelpers';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import type { IIngredient, IRecipe, TUnit } from '@/types/recipe.types';
+import { renderToastTemplate } from '@/templates/toast.template';
+import * as bootstrap from 'bootstrap';
+
 
 export async function renderRecipeEditView() {
   hideSearchInputInHeader();
@@ -33,6 +36,9 @@ export async function renderRecipeEditView() {
   }
 
   app.innerHTML = renderRecipeEditTemplate();
+  app.innerHTML += renderToastTemplate('Änderungen gespeichert.');
+  const successToast = new bootstrap.Toast('.toast');
+
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
@@ -190,7 +196,11 @@ export async function renderRecipeEditView() {
 
     try {
       await updateRecipe(recipeId, updatedRecipe);
-      window.location.href = `/recipe?id=${recipeId}`;
+      successToast?.show();
+      setTimeout(() => {
+        
+        window.location.href = `/recipe?id=${recipeId}`;
+      }, 2000);
     } catch (error) {
       console.error('Error updating recipe:', error);
       alert('Fehler beim Speichern des Rezepts');

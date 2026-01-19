@@ -16,6 +16,16 @@ export function renderAddNewRecipeView() {
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
 
+  const errorMessageSpans = {
+    name: document.getElementById('name-error') as HTMLSpanElement,
+    description: document.getElementById('description-error') as HTMLSpanElement,
+    prepTime: document.getElementById('preptime-error') as HTMLSpanElement,
+    imgUrl: document.getElementById('image-url-error') as HTMLSpanElement,
+    categories: document.getElementById('categories-error') as HTMLSpanElement,
+    ingredients: document.getElementById('ingredients-error') as HTMLSpanElement,
+    instructions: document.getElementById('instructions-error') as HTMLSpanElement,
+  };
+
   const newRecipeNameInput = document.getElementById(
     'new-recipe-name',
   ) as HTMLInputElement;
@@ -68,6 +78,24 @@ export function renderAddNewRecipeView() {
   let newRecipeCategories: string[] = [];
   let newRecipeIngredients: IIngredient[] = [];
   let newRecipeInstructions: string[] = [];
+
+  /** Input listeners that check if inputs are empty */
+
+  const inputValidators: Array<[HTMLInputElement, HTMLSpanElement]> = [
+    [newRecipeNameInput, errorMessageSpans.name],
+    [newRecipeDescriptionInput, errorMessageSpans.description],
+    [newRecipePrepTimeInput, errorMessageSpans.prepTime],
+    [newRecipeImgUrl, errorMessageSpans.imgUrl],
+    [newRecipeCategoryInput, errorMessageSpans.categories],
+    [newRecipeIngredientsInputName, errorMessageSpans.ingredients],
+    [newRecipeInstructionsInput, errorMessageSpans.instructions]
+  ]
+
+  inputValidators.forEach(([input, errorSpan]) => {
+    input.addEventListener('input', () => {
+      isEmtpyInputField(input, errorSpan)
+    })
+  })
 
   /***
    * Start of functions that push a new category into the newRecipeCategory array
@@ -199,23 +227,52 @@ export function renderAddNewRecipeView() {
   handleDeleteRequest(newlyAddedInstructions, newRecipeInstructions, showNewlyAddedInstructions);
 
 
+  function isEmtpyInputField(input: HTMLInputElement, errorSpan?: HTMLSpanElement) {
+    if (input.value.trim() === '') {
+      if (errorSpan) {
+        errorSpan.style.visibility = 'visible';
+      }
+      return false;
+    }
+    if (errorSpan) {
+      errorSpan.style.visibility = 'hidden';
+    }
+    return true;
+  }
+
+
   /** Helper function that checks if array is empty */
-  const isEmptyArray = (arr: string[] | IIngredient[]) => !Array.isArray(arr) || arr.length === 0;
+  const isEmptyArray = (arr: string[] | IIngredient[], errorSpan: HTMLSpanElement) => {
+    if (!Array.isArray(arr) || arr.length === 0) {
+      if (errorSpan) {
+        errorSpan.style.visibility = 'visible';
+      }
+      return false;
+    }
+    if (errorSpan) {
+      errorSpan.style.visibility = 'hidden'
+    }
+    return true;
+  }
+
 
   newRecipeForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    if (newRecipeNameInput.value.trim() == ''
-      || newRecipeDescriptionInput.value.trim() == ''
-      || newRecipeImgUrl.value.trim() == ''
-      || newRecipePrepTimeInput.value.trim() == ''
-      || isEmptyArray(newRecipeCategories)
-      || isEmptyArray(newRecipeIngredients)
-      || isEmptyArray(newRecipeInstructions)
-    ) {
-      console.log('Cant add stuff due to empty fields')
-      return
+    const validations = [
+      isEmtpyInputField(newRecipeNameInput, errorMessageSpans.name),
+      isEmtpyInputField(newRecipeDescriptionInput, errorMessageSpans.description),
+      isEmtpyInputField(newRecipePrepTimeInput, errorMessageSpans.prepTime),
+      isEmtpyInputField(newRecipeImgUrl, errorMessageSpans.imgUrl),
+      isEmptyArray(newRecipeCategories, errorMessageSpans.categories),
+      isEmptyArray(newRecipeIngredients, errorMessageSpans.ingredients),
+      isEmptyArray(newRecipeInstructions, errorMessageSpans.instructions)
+    ];
+
+    if (validations.includes(false)) {
+      return;
     }
+
 
     const newRecipe: IRecipe = {
       name: newRecipeNameInput.value,
@@ -234,6 +291,9 @@ export function renderAddNewRecipeView() {
     newRecipeForm.reset();
     newRecipeIngredients = [];
     newRecipeCategories = [];
+    newRecipeInstructions = [];
     newlyAddedCategories.textContent = '';
+    newlyAddedIngredients.textContent = '';
+    newlyAddedInstructions.textContent = '';
   });
 }

@@ -8,6 +8,12 @@ import {
   hideAddNewButtonInHeader,
   hideSearchInputInHeader,
 } from '@/utils/visibilityHelpers';
+import { renderFavoriteToggle } from '@/components/favoriteToggle';
+import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
+import { deleteRecipe } from '@/services/recipes.service';
+import { renderDeleteModal } from '@/components/modal';
+import * as bootstrap from 'bootstrap';
+import { router } from '@/core/router';
 
 export async function renderRecipeView() {
   // Hide search input And add new button
@@ -33,6 +39,7 @@ export async function renderRecipeView() {
   }
 
   app.innerHTML = renderRecipeViewTemplate();
+  app.innerHTML += renderDeleteModal();
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
@@ -41,6 +48,15 @@ export async function renderRecipeView() {
   document.getElementById('edit-recipe-btn')!.addEventListener('click', () => {
     (window as any).router.nav(`/recipe/edit?id=${recipe.id}`);
   });
+
+  const favoriteContainer = document.querySelector(
+    '#favorite-button-container',
+  )!;
+  favoriteContainer.innerHTML = renderFavoriteToggle(
+    recipe.favorite,
+    recipe.id!,
+  );
+  attachFavoriteListeners(favoriteContainer, [recipe]);
 
   const elements = {
     image: document.getElementById('recipe-image')! as HTMLImageElement,
@@ -111,4 +127,27 @@ export async function renderRecipeView() {
           `<li class="d-flex align-items-center mb-2">${instruction}</li>`,
       )
       .join('') || '';
+
+  const deleteRecipeBtn = document.getElementById(
+    'delete-recipe',
+  ) as HTMLElement;
+  deleteRecipeBtn.addEventListener('click', () => {
+    deleteRecipe(recipe.id);
+    console.log(`Success: Reciped with id ${recipe.id} deleted`);
+
+    const modalEl = document.getElementById('deleteRecipeModal') as HTMLElement;
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    modalEl.addEventListener(
+      'hidden.bs.modal',
+      () => {
+        router.nav('/');
+        document.body.classList.remove('modal-open');
+        document.querySelectorAll('.modal-backdrop').forEach((b) => b.remove());
+      },
+      { once: true },
+    );
+
+    modal.hide();
+  });
 }

@@ -3,6 +3,7 @@ import { setupEventListeners } from './utils/helperFunction';
 import { renderHomeView } from '../views/homeView';
 import { renderRecipeListView } from '../views/recipeListView';
 import { renderRecipeView } from '../views/recipeView';
+import { renderRecipeEditView } from '../views/recipeEditView';
 import { renderLayout } from '../layouts/layoutManager';
 import { getQueryParam } from './utils/urlUtils';
 import { renderAddNewRecipeView } from '@/views/addNewRecipeView';
@@ -14,6 +15,12 @@ const routes: Record<string, RouteHandler> = {
     const recipeId = getQueryParam('id');
     if (recipeId) {
       renderRecipeView();
+    }
+  },
+  '/recipe/edit': () => {
+    const recipeId = getQueryParam('id');
+    if (recipeId) {
+      renderRecipeEditView();
     }
   },
   '/recipes': renderRecipeListView,

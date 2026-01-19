@@ -52,3 +52,13 @@ export async function deleteRecipe(id: string) {
     console.log('Error deleting file: ', error);
   }
 }
+
+export async function updateRecipe(recipeId: string, recipe: Partial<IRecipe>): Promise<void> {
+  try {
+    const recipeRef = doc(db, 'recipes', recipeId);
+    await updateDoc(recipeRef, recipe);
+  } catch (error) {
+    console.error('Error updating recipe:', error);
+    throw error;
+  }
+}

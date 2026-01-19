@@ -43,18 +43,47 @@ export const createOptionsContainer = (inputElement: HTMLInputElement) => {
   return a;
 };
 
-export const createOption = (inputValue: string, recipe: IRecipe) => {
-  let optionDiv: HTMLElement;
-  optionDiv = document.createElement('DIV');
+export const createOption = (
+  inputValue: string,
+  recipe: IRecipe,
+): HTMLElement => {
+  const optionDiv = document.createElement('div');
   optionDiv.classList.add('option-container');
-  optionDiv.innerHTML =
-    '<strong>' + recipe.name.substring(0, inputValue.length) + '</strong>';
-  optionDiv.innerHTML += recipe.name.substring(inputValue.length);
-  optionDiv.innerHTML += "<input type='hidden' value='" + recipe.name + "'>";
-  optionDiv.innerHTML += `<img class='option-image' src='${recipe.imageUrl}'>`;
+  const name = recipe.name;
+  const search = inputValue.trim();
+  const nameContainer = document.createElement('span');
+  if (search) {
+    const matchIndex = name.toLowerCase().indexOf(search.toLowerCase());
+    if (matchIndex !== -1) {
+      nameContainer.append(
+        document.createTextNode(name.substring(0, matchIndex)),
+      );
+      const strong = document.createElement('strong');
+      strong.textContent = name.substring(
+        matchIndex,
+        matchIndex + search.length,
+      );
+      nameContainer.append(strong);
+      nameContainer.append(
+        document.createTextNode(name.substring(matchIndex + search.length)),
+      );
+    } else {
+      nameContainer.textContent = name;
+    }
+  } else {
+    nameContainer.textContent = name;
+  }
+  const hiddenInput = document.createElement('input');
+  hiddenInput.type = 'hidden';
+  hiddenInput.value = name;
+  const image = document.createElement('img');
+  image.classList.add('option-image');
+  image.src = recipe.imageUrl;
+  optionDiv.append(nameContainer, hiddenInput, image);
   optionDiv.addEventListener('click', () => {
     router.nav(`/recipe?id=${recipe.id}`);
   });
+
   return optionDiv;
 };
 

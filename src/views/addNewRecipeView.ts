@@ -4,6 +4,8 @@ import type { IRecipe, IIngredient, TUnit } from '@/types/recipe.types';
 import { renderBackButton } from '@/components/backButton';
 import { hideSearchInputInHeader, hideAddNewButtonInHeader } from '@/utils/visibilityHelpers';
 import { handleDeleteRequest } from '@/core/utils/helperFunction';
+import { renderToastTemplate } from '@/templates/toast.template';
+import * as bootstrap from 'bootstrap';
 
 export function renderAddNewRecipeView() {
   // Hide search input And add new button
@@ -12,6 +14,8 @@ export function renderAddNewRecipeView() {
 
   const app = document.querySelector('#app')!;
   app.innerHTML = renderAddNewRecipeTemplate();
+  app.innerHTML += renderToastTemplate('Rezept erfolgreich gespeichert.');
+  const successToast = new bootstrap.Toast('.toast');
 
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
@@ -25,6 +29,7 @@ export function renderAddNewRecipeView() {
     ingredients: document.getElementById('ingredients-error') as HTMLSpanElement,
     instructions: document.getElementById('instructions-error') as HTMLSpanElement,
   };
+
 
   const newRecipeNameInput = document.getElementById(
     'new-recipe-name',
@@ -286,6 +291,9 @@ export function renderAddNewRecipeView() {
     };
 
     createRecipe(newRecipe);
+
+    successToast.show();
+
 
     /*** UI und State reset */
     newRecipeForm.reset();

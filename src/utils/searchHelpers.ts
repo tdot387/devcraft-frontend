@@ -93,46 +93,42 @@ export const removeActive = (x: HTMLCollectionOf<HTMLDivElement>) => {
   }
 };
 
-export const markOptionActive = (
-  currentFocus: number,
-  x?: HTMLCollectionOf<HTMLDivElement>,
-) => {
-  if (!x) return -1;
-  removeActive(x);
-  if (currentFocus >= x.length) currentFocus = 0;
-  if (currentFocus < 0) currentFocus = x.length - 1;
-  x[currentFocus].classList.add('autocomplete-active');
-  return currentFocus;
+export const reactToKeyboardNavigation = (inputElement: HTMLInputElement) => {
+  let currentFocus = -1;
+
+  inputElement.addEventListener('keydown', (e) => {
+    const list = document.getElementById(`${inputElement.id}autocomplete-list`);
+    if (!list) return;
+
+    const items = Array.from(list.getElementsByTagName('div'));
+    if (items.length === 0) return;
+
+    const keyActions: Record<string, () => void> = {
+      ArrowDown: () => {
+        currentFocus = (currentFocus + 1) % items.length;
+        markOptionActive(currentFocus, items);
+      },
+      ArrowUp: () => {
+        currentFocus = currentFocus <= 0 ? items.length - 1 : currentFocus - 1;
+        markOptionActive(currentFocus, items);
+      },
+      Enter: () => {
+        e.preventDefault();
+        items[currentFocus]?.click();
+      },
+      Escape: () => closeOtherOptions(inputElement),
+    };
+
+    keyActions[e.key]?.();
+  });
 };
 
-export const reactToKeyboardNavigation = (
-  inputElement: HTMLInputElement,
+export const markOptionActive = (
   currentFocus: number,
+  items: HTMLDivElement[],
 ) => {
-  inputElement.addEventListener('keydown', function (e) {
-    let x = document.getElementById(this.id + 'autocomplete-list');
-    let autoComppleteList;
-    if (x) {
-      autoComppleteList = x.getElementsByTagName('div');
-    }
-    if (!autoComppleteList || autoComppleteList.length === 0) return;
-    if (e.key === 'ArrowDown') {
-      currentFocus == autoComppleteList!.length - 1
-        ? (currentFocus = 0)
-        : currentFocus++;
-      markOptionActive(currentFocus, autoComppleteList);
-    } else if (e.key === 'ArrowUp') {
-      currentFocus == 0
-        ? (currentFocus = autoComppleteList.length - 1)
-        : currentFocus--;
-      markOptionActive(currentFocus, autoComppleteList);
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (currentFocus > -1) {
-        if (autoComppleteList) autoComppleteList[currentFocus].click();
-      }
-    } else if (e.key === 'Escape') {
-      closeOtherOptions(inputElement);
-    }
+  if (!items) return;
+  items.forEach((item, i) => {
+    item.classList.toggle('autocomplete-active', i === currentFocus);
   });
 };

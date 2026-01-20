@@ -63,12 +63,9 @@ export async function updateRecipe(
     throw error;
   }
 }
-<<<<<<< HEAD
-=======
 
 function broadcastRecipes(recipes: IRecipe[]): void {
   window.dispatchEvent(
     new CustomEvent('recipesFetched', { detail: { recipes } }),
   );
 }
->>>>>>> 6bdc7abffbe8ae5b36ec35ca0b2015ab85c275cf

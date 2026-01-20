@@ -4,15 +4,16 @@ import { renderFavoriteToggle } from '@/components/favoriteToggle';
 export function renderCategoryButtons(
   categories: string[],
   favoriteCount?: number,
+  activeCategory?: string,
 ): string {
   return `
     <div class="d-flex overflow-auto gap-2 pb-2">
       ${categories
-        .map((category, index) => {
-          const btnClass =
-            index === 0
-              ? 'btn btn-success flex-shrink-0'
-              : 'btn btn-outline-secondary flex-shrink-0';
+        .map((category) => {
+          const isActive = category === activeCategory;
+          const btnClass = isActive
+            ? 'btn btn-success flex-shrink-0'
+            : 'btn btn-outline-secondary flex-shrink-0';
           const badge =
             category === 'Meine Favoriten' && favoriteCount !== undefined
               ? `<span class="badge bg-danger ms-1">${favoriteCount}</span>`

@@ -4,10 +4,6 @@ import { getRecipeById } from '@/services/recipeById.service';
 import type { IIngredient } from '@/types/recipe.types';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import { renderBackButton } from '@/components/backButton';
-import {
-  hideAddNewButtonInHeader,
-  hideSearchInputInHeader,
-} from '@/utils/visibilityHelpers';
 import { renderFavoriteToggle } from '@/components/favoriteToggle';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 import { deleteRecipe } from '@/services/recipes.service';
@@ -17,10 +13,6 @@ import { router } from '@/core/router';
 import { renderToastTemplate } from '@/templates/toast.template';
 
 export async function renderRecipeView() {
-  // Hide search input And add new button
-  hideSearchInputInHeader();
-  hideAddNewButtonInHeader();
-
   const app = document.querySelector('#app')!;
   const recipeId = getQueryParam('id');
 

@@ -3,19 +3,12 @@ import { getQueryParam } from '@/core/utils/urlUtils';
 import { getRecipeById } from '@/services/recipeById.service';
 import { updateRecipe } from '@/services/recipes.service';
 import { renderBackButton } from '@/components/backButton';
-import {
-  hideAddNewButtonInHeader,
-  hideSearchInputInHeader,
-} from '@/utils/visibilityHelpers';
 import { renderLoadingSpinner } from '@/components/loadingSpinner';
 import type { IIngredient, IRecipe, TUnit } from '@/types/recipe.types';
 import { renderToastTemplate } from '@/templates/toast.template';
 import * as bootstrap from 'bootstrap';
 
 export async function renderRecipeEditView() {
-  hideSearchInputInHeader();
-  hideAddNewButtonInHeader();
-
   const app = document.querySelector('#app')!;
   const recipeId = getQueryParam('id');
 

@@ -10,6 +10,7 @@ import {
   renderSimpleRecipeCards,
 } from '@/utils/homeViewHelpers';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
+import { getQueryParam } from '@/core/utils/urlUtils';
 
 export async function renderHomeView() {
   const app = document.querySelector('#app')!;
@@ -19,7 +20,8 @@ export async function renderHomeView() {
 
   let recipes = await getRecipes();
   const homeCategories = app.querySelector('#home-categories')!;
-  let currentCategory = 'Beliebte Rezepte';
+  
+  const getCurrentCategory = () => getQueryParam('category') || 'Beliebte Rezepte';
 
   function updateCategoryButtonsWithBadge() {
     const favoriteCount = recipes.filter((recipe) => recipe.favorite).length;
@@ -28,25 +30,15 @@ export async function renderHomeView() {
       'Beliebte Rezepte',
       ...getCategories(recipes),
     ];
-    homeCategories.innerHTML = renderCategoryButtons(categories, favoriteCount);
-    markActiveCategory();
+    homeCategories.innerHTML = renderCategoryButtons(categories, favoriteCount, getCurrentCategory());
   }
 
-  function markActiveCategory() {
-    homeCategories.querySelectorAll('button').forEach((btn) => {
-      btn.className =
-        btn.getAttribute('data-category') === currentCategory
-          ? 'btn btn-success flex-shrink-0'
-          : 'btn btn-outline-secondary flex-shrink-0';
-    });
-  }
-
-  function renderRecipesByCategory(category: string) {
+function renderRecipesByCategory(category: string) {
     const html = getRecipeHTMLForCategory(recipes, category);
     recipeList.innerHTML = html;
     attachFavoriteListeners(recipeList, recipes, () => {
       updateCategoryButtonsWithBadge();
-      if (currentCategory === 'Meine Favoriten') {
+      if (getCurrentCategory() === 'Meine Favoriten') {
         renderRecipesByCategory('Meine Favoriten');
       }
     });
@@ -56,14 +48,25 @@ export async function renderHomeView() {
     const target = e.target as HTMLElement;
     if (!target.matches('button')) return;
 
-    currentCategory = target.getAttribute('data-category')!;
+    const category = target.getAttribute('data-category')!;
+    const url = category === 'Beliebte Rezepte' ? '/' : `/?category=${encodeURIComponent(category)}`;
+    window.history.pushState({}, '', url);
+    
     updateCategoryButtons(homeCategories, target);
-    updateRecipeHeader(app, currentCategory);
-    renderRecipesByCategory(currentCategory);
+    updateRecipeHeader(app, category);
+    renderRecipesByCategory(category);
   }
 
   function handleSearch(searchEvent: Event) {
     const searchValue = (searchEvent as CustomEvent).detail.searchText;
+    
+    if (!searchValue) {
+      // If search is cleared, restore category view
+      renderRecipesByCategory(getCurrentCategory());
+      return;
+    }
+    
+    // Search across ALL recipes, ignore category filter
     const filtered = recipes.filter((rec) =>
       rec.name.toLowerCase().includes(searchValue.toLowerCase()),
     );
@@ -75,5 +78,5 @@ export async function renderHomeView() {
   window.addEventListener('executeSearch', handleSearch);
 
   updateCategoryButtonsWithBadge();
-  renderRecipesByCategory(currentCategory);
+  renderRecipesByCategory(getCurrentCategory());
 }

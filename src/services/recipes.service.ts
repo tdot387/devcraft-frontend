@@ -18,7 +18,7 @@ export async function getRecipes(): Promise<IRecipe[]> {
         ...(doc.data() as Omit<IRecipe, 'id'>),
       };
     });
-
+    broadcastRecipes(recipes);
     return recipes;
   } catch (error) {
     console.error('Error fetching recipes:', error);
@@ -63,3 +63,12 @@ export async function updateRecipe(
     throw error;
   }
 }
+<<<<<<< HEAD
+=======
+
+function broadcastRecipes(recipes: IRecipe[]): void {
+  window.dispatchEvent(
+    new CustomEvent('recipesFetched', { detail: { recipes } }),
+  );
+}
+>>>>>>> 6bdc7abffbe8ae5b36ec35ca0b2015ab85c275cf

@@ -4,7 +4,7 @@ import {
   addDoc,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
 } from 'firebase/firestore';
 import { db } from '@/services/firebase/firebaseApp';
 import type { IRecipe } from '@/types/recipe.types';
@@ -28,8 +28,7 @@ export async function getRecipes(): Promise<IRecipe[]> {
 
 export async function createRecipe(recipe: IRecipe) {
   try {
-    const docRef = await addDoc(collection(db, 'recipes'), recipe);
-    console.log('Success!', docRef.id);
+    await addDoc(collection(db, 'recipes'), recipe);
   } catch (e) {
     console.error('Error adding document: ', e);
   }
@@ -44,16 +43,18 @@ export async function updateRecipeFavorite(
   await updateDoc(recipeRef, { favorite: isFavorite });
 }
 
-
 export async function deleteRecipe(id: string) {
   try {
-    await deleteDoc(doc(db, "recipes", id));
-  } catch(error) {
+    await deleteDoc(doc(db, 'recipes', id));
+  } catch (error) {
     console.log('Error deleting file: ', error);
   }
 }
 
-export async function updateRecipe(recipeId: string, recipe: Partial<IRecipe>): Promise<void> {
+export async function updateRecipe(
+  recipeId: string,
+  recipe: Partial<IRecipe>,
+): Promise<void> {
   try {
     const recipeRef = doc(db, 'recipes', recipeId);
     await updateDoc(recipeRef, recipe);

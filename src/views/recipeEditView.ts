@@ -12,7 +12,6 @@ import type { IIngredient, IRecipe, TUnit } from '@/types/recipe.types';
 import { renderToastTemplate } from '@/templates/toast.template';
 import * as bootstrap from 'bootstrap';
 
-
 export async function renderRecipeEditView() {
   hideSearchInputInHeader();
   hideAddNewButtonInHeader();
@@ -39,7 +38,6 @@ export async function renderRecipeEditView() {
   app.innerHTML += renderToastTemplate('Änderungen gespeichert.');
   const successToast = new bootstrap.Toast('.toast');
 
-
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
 
@@ -65,7 +63,6 @@ export async function renderRecipeEditView() {
       'recipe-edit-form',
     ) as HTMLFormElement,
   };
-  console.log(recipe);
 
   // file form with recipe data
   elements.recipeName.value = recipe.name;
@@ -161,20 +158,28 @@ export async function renderRecipeEditView() {
     e.preventDefault();
 
     // collect ingredients
-    const ingredientRows = elements.ingredientsContainer.querySelectorAll('.ingredient-row');
+    const ingredientRows =
+      elements.ingredientsContainer.querySelectorAll('.ingredient-row');
     const ingredients: IIngredient[] = [];
     ingredientRows.forEach((row) => {
-      const amount = (row.querySelector('.ingredient-amount') as HTMLInputElement).value;
-      const unit = (row.querySelector('.ingredient-unit') as HTMLInputElement).value as TUnit;
-      const name = (row.querySelector('.ingredient-name') as HTMLInputElement).value;
+      const amount = (
+        row.querySelector('.ingredient-amount') as HTMLInputElement
+      ).value;
+      const unit = (row.querySelector('.ingredient-unit') as HTMLInputElement)
+        .value as TUnit;
+      const name = (row.querySelector('.ingredient-name') as HTMLInputElement)
+        .value;
       ingredients.push({ amount, unit, name });
     });
 
     // collect instructions
-    const instructionRows = elements.instructionsContainer.querySelectorAll('.instruction-row');
+    const instructionRows =
+      elements.instructionsContainer.querySelectorAll('.instruction-row');
     const instructions: string[] = [];
     instructionRows.forEach((row) => {
-      const text = (row.querySelector('.instruction-text') as HTMLTextAreaElement).value;
+      const text = (
+        row.querySelector('.instruction-text') as HTMLTextAreaElement
+      ).value;
       instructions.push(text);
     });
 
@@ -198,7 +203,6 @@ export async function renderRecipeEditView() {
       await updateRecipe(recipeId, updatedRecipe);
       successToast?.show();
       setTimeout(() => {
-        
         window.location.href = `/recipe?id=${recipeId}`;
       }, 2000);
     } catch (error) {

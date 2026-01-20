@@ -4,10 +4,9 @@ import { router } from '../router';
 // helper function to set up event listeners for link clicks
 export const handleLinkClick = (e: Event) => {
   const target = e.target as HTMLElement;
-  if (target.tagName === 'A') {
+  if (target.tagName.toUpperCase() === 'A') {
     e.preventDefault();
     const url = (target as HTMLAnchorElement).getAttribute('href');
-    console.log('Navigating to:', url);
     router.nav(url || '/', true);
   }
 };
@@ -24,7 +23,11 @@ export const setupEventListeners = () => {
   window.addEventListener('popstate', handleBrowserNavigation);
 };
 
-export const handleDeleteRequest = (eventToBeFired: HTMLElement, arrayToBeSpliced: string[] | IIngredient[], elementToBeShown: () => void) => {
+export const handleDeleteRequest = (
+  eventToBeFired: HTMLElement,
+  arrayToBeSpliced: string[] | IIngredient[],
+  elementToBeShown: () => void,
+) => {
   eventToBeFired.addEventListener('click', (event: MouseEvent) => {
     const target = event.target as HTMLElement | null;
     const btn = target?.closest('.delete-btn') as HTMLElement | null;
@@ -34,5 +37,5 @@ export const handleDeleteRequest = (eventToBeFired: HTMLElement, arrayToBeSplice
       arrayToBeSpliced.splice(index, 1);
       elementToBeShown();
     }
-  })
-}
+  });
+};

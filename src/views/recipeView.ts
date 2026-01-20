@@ -136,8 +136,6 @@ export async function renderRecipeView() {
   ) as HTMLElement;
   deleteRecipeBtn.addEventListener('click', () => {
     deleteRecipe(recipe.id);
-    console.log(`Success: Reciped with id ${recipe.id} deleted`);
-
     const modalEl = document.getElementById('deleteRecipeModal') as HTMLElement;
     const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
 
@@ -148,7 +146,9 @@ export async function renderRecipeView() {
         setTimeout(() => {
           router.nav('/');
           document.body.classList.remove('modal-open');
-          document.querySelectorAll('.modal-backdrop').forEach((b) => b.remove());
+          document
+            .querySelectorAll('.modal-backdrop')
+            .forEach((b) => b.remove());
         }, 3000);
       },
       { once: true },

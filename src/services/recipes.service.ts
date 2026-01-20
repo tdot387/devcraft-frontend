@@ -4,7 +4,7 @@ import {
   addDoc,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
 } from 'firebase/firestore';
 import { db } from '@/services/firebase/firebaseApp';
 import type { IRecipe } from '@/types/recipe.types';
@@ -18,7 +18,7 @@ export async function getRecipes(): Promise<IRecipe[]> {
         ...(doc.data() as Omit<IRecipe, 'id'>),
       };
     });
-
+    broadcastRecipes(recipes);
     return recipes;
   } catch (error) {
     console.error('Error fetching recipes:', error);
@@ -44,16 +44,18 @@ export async function updateRecipeFavorite(
   await updateDoc(recipeRef, { favorite: isFavorite });
 }
 
-
 export async function deleteRecipe(id: string) {
   try {
-    await deleteDoc(doc(db, "recipes", id));
-  } catch(error) {
+    await deleteDoc(doc(db, 'recipes', id));
+  } catch (error) {
     console.log('Error deleting file: ', error);
   }
 }
 
-export async function updateRecipe(recipeId: string, recipe: Partial<IRecipe>): Promise<void> {
+export async function updateRecipe(
+  recipeId: string,
+  recipe: Partial<IRecipe>,
+): Promise<void> {
   try {
     const recipeRef = doc(db, 'recipes', recipeId);
     await updateDoc(recipeRef, recipe);
@@ -61,4 +63,10 @@ export async function updateRecipe(recipeId: string, recipe: Partial<IRecipe>): 
     console.error('Error updating recipe:', error);
     throw error;
   }
+}
+
+function broadcastRecipes(recipes: IRecipe[]): void {
+  window.dispatchEvent(
+    new CustomEvent('recipesFetched', { detail: { recipes } }),
+  );
 }

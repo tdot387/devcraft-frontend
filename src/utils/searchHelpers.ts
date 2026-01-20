@@ -26,7 +26,7 @@ export const createOptionsDropdownOnInput = (
       .filter((rec) => rec.name.toLocaleLowerCase().includes(inputValue))
       .forEach((rec) => {
         const option: HTMLElement = createOption(inputValue, rec);
-        option.addEventListener('click', function (e) {
+        option.addEventListener('click', function () {
           inputElement.value = this.getElementsByTagName('input')[0].value;
           closeOtherOptions(inputElement);
           // TODO route to recipe view

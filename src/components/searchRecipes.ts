@@ -1,4 +1,4 @@
-import { renderSearchTemplate } from '@/templates/searchTemplate';
+import { renderSearchTemplate } from '@/templates/search.template';
 import type { IRecipe } from '@/types/recipe.types';
 import {
   createOptionsDropdownOnInput,

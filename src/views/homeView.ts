@@ -10,6 +10,12 @@ import {
   renderSimpleRecipeCards,
 } from '@/utils/homeViewHelpers';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
+import type { IRecipe } from '@/types/recipe.types';
+import {
+  applyFilters,
+  ID_CATEGORY,
+  ID_INGREDIENT,
+} from '@/utils/filterHelpers';
 
 export async function renderHomeView() {
   const app = document.querySelector('#app')!;
@@ -18,6 +24,7 @@ export async function renderHomeView() {
   recipeList.innerHTML = renderLoadingSpinner();
 
   let recipes = await getRecipes();
+  handleFilter(recipes);
   const homeCategories = app.querySelector('#home-categories')!;
   let currentCategory = 'Beliebte Rezepte';
 
@@ -62,17 +69,27 @@ export async function renderHomeView() {
     renderRecipesByCategory(currentCategory);
   }
 
-  function handleSearch(searchEvent: Event) {
-    const searchValue = (searchEvent as CustomEvent).detail.searchText;
-    const filtered = recipes.filter((rec) =>
-      rec.name.toLowerCase().includes(searchValue.toLowerCase()),
+  function handleFilter(list: IRecipe[]) {
+    document.getElementById('apply-filters')?.addEventListener('click', () => {
+      recipeList.innerHTML = renderSimpleRecipeCards(applyFilters(list));
+    });
+    document.getElementById('reset-filters')?.addEventListener('click', () => {
+      recipeList.innerHTML = renderSimpleRecipeCards(list);
+      document
+        .querySelectorAll('#' + ID_INGREDIENT)
+        .forEach((e) => ((e as HTMLInputElement).checked = false));
+      document
+        .querySelectorAll('#' + ID_CATEGORY)
+        .forEach((e) => ((e as HTMLInputElement).checked = false));
+    });
+    attachFavoriteListeners(
+      recipeList,
+      recipes,
+      updateCategoryButtonsWithBadge,
     );
-    recipeList.innerHTML = renderSimpleRecipeCards(filtered);
-    attachFavoriteListeners(recipeList, recipes, updateCategoryButtonsWithBadge);
   }
 
   homeCategories.addEventListener('click', handleCategoryClick);
-  window.addEventListener('executeSearch', handleSearch);
 
   updateCategoryButtonsWithBadge();
   renderRecipesByCategory(currentCategory);

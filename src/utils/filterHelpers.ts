@@ -3,18 +3,17 @@ import { renderFilterIconTemplate } from '@/templates/filter.template';
 import {
   renderCheckbox,
   renderFilterModalDialogContent,
-} from '@/templates/filterDialog.template copy';
+} from '@/templates/filterDialog.template';
 import type { IRecipe } from '@/types/recipe.types';
-import { IntegerSchema } from 'firebase/ai';
-import { doc } from 'firebase/firestore';
 
-const ID_CATEGORY = 'category-checkbox';
-const ID_INGREDIENT = 'ingredient-checkbox';
+export const ID_CATEGORY = 'category-checkbox';
+export const ID_INGREDIENT = 'ingredient-checkbox';
 const allRecipes: IRecipe[] = await getRecipes();
 
 export const createFilterButton = () => {
   const filterButton = document.createElement('BUTTON') as HTMLButtonElement;
   filterButton.setAttribute('style', 'order: 2;');
+  filterButton.setAttribute('id', 'filter-button');
   filterButton.classList.add('btn', 'btn-success', 'filter', 'w-25');
   filterButton.innerHTML = 'Filter' + renderFilterIconTemplate();
   return filterButton;
@@ -40,10 +39,10 @@ function createDialogWindow() {
     '#btn-close-dialog',
   ) as HTMLButtonElement;
   closeButton.addEventListener('click', () => dialog.removeAttribute('open'));
+  return dialog;
 }
 
-function populateCheckboxes() {
-  const dialog = getFilterModalDialog();
+function populateCheckboxes(dialog: HTMLElement) {
   const ingredientSection = dialog.querySelector('#ingredient-filters');
   const categorySection = dialog.querySelector('#category-filters');
   if (!ingredientSection || !categorySection) return;
@@ -79,16 +78,10 @@ function getCategories() {
   return categories;
 }
 
-export function applyFilters(dialog: HTMLElement, recipeList: IRecipe[]) {
-  const selectedCategories: string[] = [];
-  const selectedIngredients: string[] = [];
-  dialog
-    .querySelectorAll('#' + ID_CATEGORY)
-    .forEach((e) => selectedCategories.push((e as HTMLInputElement).value));
-  dialog
-    .querySelectorAll('#' + ID_INGREDIENT)
-    .forEach((e) => selectedIngredients.push((e as HTMLInputElement).value));
-  return recipeList.filter((recipe) => {
+export function applyFilters(recipeList: IRecipe[]): IRecipe[] {
+  const selectedCategories: string[] = getSelectedCategories();
+  const selectedIngredients: string[] = getSelectedIngredients();
+  const filteredRecipes = recipeList.filter((recipe) => {
     return (
       selectedCategories.every((filterCatefory) =>
         recipe.categories.includes(filterCatefory),
@@ -98,18 +91,29 @@ export function applyFilters(dialog: HTMLElement, recipeList: IRecipe[]) {
       )
     );
   });
+  return filteredRecipes;
 }
 
-// apply filter button
-export function addFilterEventListener(recipeList: IRecipe[]) {
-  const dialog = getFilterModalDialog();
-  const applyButton = dialog.querySelector(
-    '#apply-filters',
-  ) as HTMLButtonElement;
-  applyButton.addEventListener('click', () => applyFilters(dialog, recipeList));
-  return dialog;
+function getSelectedCategories() {
+  const selectedCategories: string[] = [];
+  document.querySelectorAll('#' + ID_CATEGORY).forEach((e) => {
+    if ((e as HTMLInputElement).checked) {
+      selectedCategories.push((e as HTMLInputElement).value);
+    }
+  });
+  return selectedCategories;
 }
 
-function getFilterModalDialog(): HTMLElement {
+function getSelectedIngredients() {
+  const selectedIngredients: string[] = [];
+  document.querySelectorAll('#' + ID_INGREDIENT).forEach((e) => {
+    if ((e as HTMLInputElement).checked) {
+      selectedIngredients.push((e as HTMLInputElement).value);
+    }
+  });
+  return selectedIngredients;
+}
+
+export function getFilterModalDialog(): HTMLElement {
   return document.getElementById('filter-dialog') as HTMLElement;
 }

@@ -8,7 +8,6 @@ export function renderFilterButton(): Node {
   const dialog = createFilterModalDialog();
   filterButton.addEventListener('click', () => {
     dialog.toggleAttribute('open');
-    console.log(dialog);
   });
   return filterButton;
 }

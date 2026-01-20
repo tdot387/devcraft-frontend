@@ -4,6 +4,11 @@ import { getRecipes } from '@/services/recipes.service';
 import { renderBackButton } from '@/components/backButton';
 import type { IRecipe } from '@/types/recipe.types';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
+import {
+  applyFilters,
+  ID_INGREDIENT,
+  ID_CATEGORY,
+} from '@/utils/filterHelpers';
 
 export async function renderRecipeListView() {
   const app = document.querySelector('#app')!;
@@ -26,12 +31,22 @@ export async function renderRecipeListView() {
 
   const recipeCards = mapToRecipeCards(recipes);
   recipeListContainer.innerHTML = recipeCards;
+  handleFilter(recipes, recipeListContainer);
   attachFavoriteListeners(recipeListContainer, recipes);
+}
 
-  window.addEventListener('executeSearch', (searchEvent) => {
-    const searchValue = (searchEvent as CustomEvent).detail.searchText;
-    recipeListContainer.innerHTML = mapToRecipeCards(recipes, searchValue);
-    attachFavoriteListeners(recipeListContainer, recipes);
+function handleFilter(list: IRecipe[], recipeListContainer: Element) {
+  document.getElementById('apply-filters')?.addEventListener('click', () => {
+    recipeListContainer.innerHTML = mapToRecipeCards(applyFilters(list));
+  });
+  document.getElementById('reset-filters')?.addEventListener('click', () => {
+    recipeListContainer.innerHTML = mapToRecipeCards(list);
+    document
+      .querySelectorAll('#' + ID_INGREDIENT)
+      .forEach((e) => ((e as HTMLInputElement).checked = false));
+    document
+      .querySelectorAll('#' + ID_CATEGORY)
+      .forEach((e) => ((e as HTMLInputElement).checked = false));
   });
 }
 

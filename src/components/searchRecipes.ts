@@ -3,7 +3,6 @@ import { renderSearchTemplate } from '@/templates/search.template';
 import type { IRecipe } from '@/types/recipe.types';
 import {
   createOptionsDropdownOnInput,
-  markOptionActive,
   closeOtherOptions,
   reactToKeyboardNavigation,
 } from '@/utils/searchHelpers';
@@ -25,10 +24,8 @@ export function renderSearch(): Node {
 }
 
 function addAutoCompleteFunctionality(searchInput: HTMLInputElement) {
-  let currentFocus = -1;
   createOptionsDropdownOnInput(searchInput, allRecipes);
-  reactToKeyboardNavigation(searchInput, currentFocus);
-  markOptionActive(currentFocus);
+  reactToKeyboardNavigation(searchInput);
   document.addEventListener('click', function (e) {
     closeOtherOptions(e.target as Element);
   });

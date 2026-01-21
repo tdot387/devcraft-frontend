@@ -10,6 +10,11 @@ import * as bootstrap from 'bootstrap';
 
 export async function renderRecipeEditView() {
   const app = document.querySelector('#app')!;
+
+  document
+    .querySelector('#filter-button')
+    ?.setAttribute('style', 'display: none;');
+
   const recipeId = getQueryParam('id');
 
   if (!recipeId) {

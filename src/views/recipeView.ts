@@ -14,6 +14,11 @@ import { renderToastTemplate } from '@/templates/toast.template';
 
 export async function renderRecipeView() {
   const app = document.querySelector('#app')!;
+
+  document
+    .querySelector('#filter-button')
+    ?.setAttribute('style', 'display: none;');
+
   const recipeId = getQueryParam('id');
 
   if (!recipeId) {

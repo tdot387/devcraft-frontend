@@ -15,7 +15,7 @@ export const createFilterButton = () => {
   filterButton.setAttribute('style', 'order: 2;');
   filterButton.setAttribute('id', 'filter-button');
   filterButton.classList.add('btn', 'btn-success', 'filter');
-  filterButton.innerHTML = 'Filter' + renderFilterIconTemplate();
+  filterButton.innerHTML = 'Filtern' + renderFilterIconTemplate();
   return filterButton;
 };
 

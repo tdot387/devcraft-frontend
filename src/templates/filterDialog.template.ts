@@ -3,13 +3,13 @@ export function renderFilterModalDialogContent(): string {
     <div class="modal-content">
 
       <div class="modal-header">
-        <h3 class="modal-title">Filter Recipes</h3>
+        <h3 class="modal-title">Rezepte Filtern nach:</h3>
         <button id="btn-close-dialog" type="button" class="btn-close"></button>
       </div>
 
       <div class="modal-body">
         <!-- Ingredients -->
-        <h5 class="fw-semibold">Ingredients</h5>
+        <h5 class="fw-semibold">Zutaten</h5>
         <div id="ingredient-filters" class="filter-list mb-2">
           <!-- checkboxes -->
         </div>
@@ -17,7 +17,7 @@ export function renderFilterModalDialogContent(): string {
         <hr class="mt-1 mb-1">
         
         <!-- Categories -->
-        <h5 class="fw-semibold">Categories</h5>
+        <h5 class="fw-semibold">Kategorie</h5>
         <div id="category-filters" class="filter-list mb-2">
           <!-- checkboxes -->
         </div>
@@ -25,10 +25,10 @@ export function renderFilterModalDialogContent(): string {
 
       <div class="modal-footer flex flex-row justify-content-between">
         <button id="apply-filters" class="btn btn-success filter-action w-50">
-          Apply Filters
+          übernehmen
         </button>
         <button id="reset-filters" class="btn btn-light filter-action w-50">
-          Reset Filters
+          zurücksetzen
         </button>
       </div>
 

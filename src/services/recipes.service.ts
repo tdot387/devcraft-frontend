@@ -28,8 +28,7 @@ export async function getRecipes(): Promise<IRecipe[]> {
 
 export async function createRecipe(recipe: IRecipe) {
   try {
-    const docRef = await addDoc(collection(db, 'recipes'), recipe);
-    console.log('Success!', docRef.id);
+    await addDoc(collection(db, 'recipes'), recipe);
   } catch (e) {
     console.error('Error adding document: ', e);
   }

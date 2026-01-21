@@ -10,7 +10,6 @@ import { renderAddNewRecipeView } from '@/views/addNewRecipeView';
 
 const routes: Record<string, RouteHandler> = {
   '/': renderHomeView,
-  '/about': () => console.log('About page'),
   '/recipe': () => {
     const recipeId = getQueryParam('id');
     if (recipeId) {

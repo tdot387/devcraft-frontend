@@ -61,7 +61,6 @@ export async function renderRecipeEditView() {
       'recipe-edit-form',
     ) as HTMLFormElement,
   };
-  console.log(recipe);
 
   // file form with recipe data
   elements.recipeName.value = recipe.name;

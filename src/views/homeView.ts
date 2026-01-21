@@ -13,8 +13,8 @@ import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 import type { IRecipe } from '@/types/recipe.types';
 import {
   applyFilters,
-  ID_CATEGORY,
-  ID_INGREDIENT,
+  closeFilterDialogAndResetFilterCount,
+  resetCheckedFilters,
 } from '@/utils/filterHelpers';
 
 export async function renderHomeView() {
@@ -75,12 +75,8 @@ export async function renderHomeView() {
     });
     document.getElementById('reset-filters')?.addEventListener('click', () => {
       recipeList.innerHTML = renderSimpleRecipeCards(list);
-      document
-        .querySelectorAll('#' + ID_INGREDIENT)
-        .forEach((e) => ((e as HTMLInputElement).checked = false));
-      document
-        .querySelectorAll('#' + ID_CATEGORY)
-        .forEach((e) => ((e as HTMLInputElement).checked = false));
+      resetCheckedFilters();
+      closeFilterDialogAndResetFilterCount();
     });
     attachFavoriteListeners(
       recipeList,

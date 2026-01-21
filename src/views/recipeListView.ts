@@ -6,8 +6,8 @@ import type { IRecipe } from '@/types/recipe.types';
 import { attachFavoriteListeners } from '@/utils/favoriteHelpers';
 import {
   applyFilters,
-  ID_INGREDIENT,
-  ID_CATEGORY,
+  closeFilterDialogAndResetFilterCount,
+  resetCheckedFilters,
 } from '@/utils/filterHelpers';
 
 export async function renderRecipeListView() {
@@ -41,12 +41,8 @@ function handleFilter(list: IRecipe[], recipeListContainer: Element) {
   });
   document.getElementById('reset-filters')?.addEventListener('click', () => {
     recipeListContainer.innerHTML = mapToRecipeCards(list);
-    document
-      .querySelectorAll('#' + ID_INGREDIENT)
-      .forEach((e) => ((e as HTMLInputElement).checked = false));
-    document
-      .querySelectorAll('#' + ID_CATEGORY)
-      .forEach((e) => ((e as HTMLInputElement).checked = false));
+    resetCheckedFilters();
+    closeFilterDialogAndResetFilterCount();
   });
 }
 

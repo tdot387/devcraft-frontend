@@ -1,0 +1,35 @@
+.filter-dialog {
+  position: fixed;
+  background-color: rgb(245, 243, 243);
+  margin-top: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 250px;
+  min-width: 250px;
+  min-height: 250px;
+  z-index: 1050;
+  border-width: thin;
+  border-color: lightgray;
+  border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+  .filter-dialog {
+    left: 25%;
+    max-width: 500px;
+    min-width: 500px;
+    max-height: 700px;
+    min-height: 300px;
+  }
+}
+
+.filter-list {
+  max-height: 120px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.25rem;
+}
+
+.filter-action {
+  max-width: 225px;
+}

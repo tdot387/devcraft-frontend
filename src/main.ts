@@ -4,6 +4,7 @@ import './assets/styles/main.css';
 import './assets/styles/hero.css';
 import './assets/styles/header.css';
 import './assets/styles/search.css';
+import './assets/styles/filterDialog.css';
 import './assets/styles/favoriteToggle.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { router } from './core/router.js';

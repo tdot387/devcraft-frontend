@@ -12,9 +12,11 @@ export function renderAddNewRecipeView() {
   app.innerHTML += renderToastTemplate('Rezept erfolgreich gespeichert.');
   const successToast = new bootstrap.Toast('.toast');
 
+  document
+    .querySelector('#filter-button')
+    ?.setAttribute('style', 'display: none;');
   document.querySelector('#back-button-container')!.innerHTML =
     renderBackButton();
-
   const errorMessageSpans = {
     name: document.getElementById('name-error') as HTMLSpanElement,
     description: document.getElementById(
